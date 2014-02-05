@@ -11,12 +11,12 @@ RULES:
 
 SEQUENCE:
 -clients register themselves to the server
--server transmitts field size and ship data(count and size)
+-server transmits field size and ship data (count and size)
 -players choose placement of the ships (client checks if valid)
 -clients transmit placement to server
 -server chooses starting player
 
-While all players own at least one ship{
+While all players own at least one ship {
 -server notifies clients who is next
 -player chooses on second game field which cell to attack
 -client submits it to the server
