@@ -1,5 +1,6 @@
 package battleships.server;
 
+import java.util.ArrayList;
 import java.util.Map;
 
 import battleships.util.Player;
@@ -21,4 +22,29 @@ public interface IGameEngine {
 	 * @return Success
 	 */
 	public boolean setPlayerMap(Player player,Map map);
+	
+	/**
+	 * Returns if game is running
+	 */
+	public boolean isRunning();
+	
+	/**
+	 * Starts game
+	 * @param If started
+	 */
+	public boolean start();
+	
+	/**
+	 * Puts game into mapCreationMode
+	 * @param players
+	 * @return succes
+	 */
+	public boolean startMapCreation(ArrayList<Player> players);
+	
+	
+	/**
+	 * Notifies the engine that a player left
+	 * @param leaving player
+	 */
+	public void playerLeft(Player player);
 }

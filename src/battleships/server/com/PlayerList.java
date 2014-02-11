@@ -1,6 +1,7 @@
 package battleships.server.com;
 
 
+import java.util.ArrayList;
 import java.util.HashMap;
 
 
@@ -32,6 +33,16 @@ public class PlayerList {
 	}
 	
 	/**
+	 * Removes player from List
+	 * @param ip
+	 * @param port
+	 * @return whether player existed or not
+	 */
+	public boolean removePlayer(String ip,Integer port){
+		return players.remove(new Client(ip,port))!=null;
+	}
+	
+	/**
 	 * Returns Player belonging to ip and port
 	 * @param ip Playerip
 	 * @param port Playerport
@@ -48,8 +59,16 @@ public class PlayerList {
 	 * Returns String representation of a ArrayList with all Players, which can be sent to the clients.
 	 * @return String representation
 	 */
-	public String getPlayerListForClient(){
+	public String getPlayerListString(){
 		return players.values().toString();
+	}
+	
+	/**
+	 * Return a Player Arraylist
+	 * @return players
+	 */
+	public ArrayList<Player> getPlayers(){
+		 return new ArrayList<Player>(players.values());
 	}
 	
 	/**
@@ -82,5 +101,9 @@ public class PlayerList {
 		public int hashCode(){
 			return ip.hashCode()+port*31;//Returns hashCode based on ip and port
 		}
+	}
+	
+	public int getSize(){
+		return players.size();
 	}
 }

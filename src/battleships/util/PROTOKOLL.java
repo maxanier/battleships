@@ -13,6 +13,7 @@ public class PROTOKOLL {
 	public final static String OK="+OK";
 	
 	//Lobby-stage
+	public final static String SC_HELLO="Hi, Please register";
 	public final static String CS_REGISTER="REGISTER"; //<nickname>
 	public final static String SC_ACCEPTED="+ACCEPTED";
 	public final static String SC_FULL=ERROR+" Full";//If server is full
