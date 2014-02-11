@@ -74,21 +74,12 @@ public class ClientGUI extends JPanel {
 	/*
 	 * Start of ClientGUI class, the main class of the GUI
 	 */
-	public ClientGUI() {
-		// For testing purposes
-		GameField gf = new GameField(10);
+	public ClientGUI(int size) {
+		GameField gf = new GameField(size);
 		gf.initButtons(Color.gray);
 		add(gf);
 		try {
 			gf.setButtonColor(5, 5, Color.blue);
 		} catch (OutOfBoundsException e) {}
-	}
-
-	public static void main(String[] args) {
-		JFrame f = new JFrame("Battleships Client");
-		f.add(new ClientGUI());
-		f.setResizable(true);
-		f.setSize(500, 500);
-		f.setVisible(true);
 	}
 }
