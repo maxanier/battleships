@@ -15,22 +15,52 @@ public class Logger {
 	private static String directory;
 	private static JTextArea log_area;
 
+	/**
+	 * Logs a Error
+	 * @param tag TAG e.g. GUI
+	 * @param msg Message
+	 */
 	public static void e(String tag, String msg) {
 		log("[ERROR] [" + tag + "]: " + msg);
 	}
 
+	/**
+	 * Logs a Error
+	 * @param tag TAG e.g. GUI
+	 * @param msg Message
+	 * @param t Exception
+	 */
 	public static void e(String tag, String msg, Throwable t) {
 		log("[ERROR] [" + tag + "]: " + msg + "\nERROR-MESSAGE: " + t.getMessage());
 	}
 
+	/**
+	 * Logs a warning
+	 * @param tag TAG e.g. GUI
+	 * @param msg Message
+	 */
+	public static void w(String tag, String msg) {
+		log("[WARNING] [" + tag + "]: " + msg);
+	}
+	
+	/**
+	 * Logs a info
+	 * @param tag TAG e.g. GUI
+	 * @param msg Message
+	 */
+	public static void i(String tag, String msg) {
+		log("[INFO] [" + tag + "]: " + msg);
+	}
+	
 	public static boolean getDebugMode() {
 		return debug;
 	}
 
-	public static void i(String tag, String msg) {
-		log("[INFO] [" + tag + "]: " + msg);
-	}
 
+
+	/**
+	 * Inits the Logger and creates a new logfile if neccessary
+	 */
 	public static void init() {
 		if (logFile == null) {
 			directory = CONSTANTS.LOG_DIRECTORY;
@@ -65,9 +95,7 @@ public class Logger {
 		log_area = area;
 	}
 
-	public static void w(String tag, String msg) {
-		log("[WARNING] [" + tag + "]: " + msg);
-	}
+
 
 	/**
 	 * Writes the message to the log file and adds the current time
