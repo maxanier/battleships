@@ -8,26 +8,27 @@ public class Player {
 	private String nickname;
 	private int id;
 	private ServerMap map;
-	
-	public Player(String nickname,int id){
-		this.nickname=nickname;
-		this.id=id;
+
+	public Player(String nickname, int id) {
+		this.nickname = nickname;
+		this.id = id;
 	}
-	
-	public String toString(){
-		return null;//TODO Implement
+
+	@Override
+	public String toString() {
+		return null;// TODO Implement
 	}
-	
-	public static Player fromString(String s){
-		return null;//TODO Implement
+
+	public static Player fromString(String s) {
+		return null;// TODO Implement
 	}
-	
-	public static ArrayList<Player> getPlayerListFromString(String s){
-		return null;//TODO Implement
+
+	public static ArrayList<Player> getPlayerListFromString(String s) {
+		return null;// TODO Implement
 	}
-	
-	public boolean isRegistered(){
-		return nickname==null;
+
+	public boolean isRegistered() {
+		return nickname == null;
 	}
 
 	public String getNickname() {

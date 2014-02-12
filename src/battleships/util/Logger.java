@@ -4,11 +4,9 @@ import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
-import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 
 import javax.swing.JTextArea;
-import javax.swing.text.DateFormatter;
 
 public class Logger {
 
@@ -16,6 +14,22 @@ public class Logger {
 	private static File logFile;
 	private static String directory;
 	private static JTextArea log_area;
+
+	public static void e(String tag, String msg) {
+		log("[ERROR] [" + tag + "]: " + msg);
+	}
+
+	public static void e(String tag, String msg, Throwable t) {
+		log("[ERROR] [" + tag + "]: " + msg + "\nERROR-MESSAGE: " + t.getMessage());
+	}
+
+	public static boolean getDebugMode() {
+		return debug;
+	}
+
+	public static void i(String tag, String msg) {
+		log("[INFO] [" + tag + "]: " + msg);
+	}
 
 	public static void init() {
 		if (logFile == null) {
@@ -41,10 +55,6 @@ public class Logger {
 		debug = mode;
 	}
 
-	public static boolean getDebugMode() {
-		return debug;
-	}
-
 	/**
 	 * Sets a JTextArea, in which all logs will appear
 	 * 
@@ -55,20 +65,8 @@ public class Logger {
 		log_area = area;
 	}
 
-	public static void i(String tag, String msg) {
-		log("[INFO] [" + tag + "]: " + msg);
-	}
-
 	public static void w(String tag, String msg) {
 		log("[WARNING] [" + tag + "]: " + msg);
-	}
-
-	public static void e(String tag, String msg) {
-		log("[ERROR] [" + tag + "]: " + msg);
-	}
-
-	public static void e(String tag, String msg, Throwable t) {
-		log("[ERROR] [" + tag + "]: " + msg + "\nERROR-MESSAGE: " + t.getMessage());
 	}
 
 	/**

@@ -5,12 +5,12 @@ import java.util.Map;
 
 import battleships.util.Player;
 
-public class BattleshipsGameEngine implements IGameEngine{
+public class BattleshipsGameEngine implements IGameEngine {
 
 	@Override
 	public void shoot(Player attacker, Player victim, int x, int y) {
 		// TODO Auto-generated method stub
-		
+
 	}
 
 	@Override
@@ -25,17 +25,15 @@ public class BattleshipsGameEngine implements IGameEngine{
 		return false;
 	}
 
-
-
 	@Override
 	public void playerLeft(Player player) {
 		// TODO Auto-generated method stub
-		
+
 	}
 
 	@Override
 	public boolean start(ArrayList<Player> players) {
-		
+
 		return false;
 	}
 
@@ -50,6 +48,5 @@ public class BattleshipsGameEngine implements IGameEngine{
 		// TODO Auto-generated method stub
 		return 0;
 	}
-
 
 }
