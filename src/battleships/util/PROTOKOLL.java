@@ -9,7 +9,7 @@ public class PROTOKOLL {
 	// General
 	public final static String ERROR = "-ERR:";
 	public final static String MISSING_PARAMETER = ERROR + " Missing Parameter";
-	public final static String OK = "+OK";
+	public final static String UNKNOWN="UNKNOWN COMMAND";
 
 	// Lobby-stage
 	public final static String SC_HELLO = "Hi, Please register";
@@ -30,6 +30,7 @@ public class PROTOKOLL {
 	public final static String SC_SHOT_RESULT = "SHOOT_RESULT";// <playerId> <x> <y> <hit>(0 if water, 1 if ship)
 	public final static String SC_NOTIFY = "YOUR_TURN";// Notifies client when its his turn
 	public final static String SC_NOT_ALLOWED = ERROR + " Not allowed";// e.g. if client wants to shoot but its not his turn
+	public final static String SC_PLAYER_NOT_FOUND=ERROR+" Player not found";
 	public final static String SC_END = "END";// <winning playerId>
 
 }

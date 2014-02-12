@@ -8,8 +8,9 @@ import battleships.util.Player;
 public class BattleshipsGameEngine implements IGameEngine {
 
 	@Override
-	public void shoot(Player attacker, Player victim, int x, int y) {
+	public boolean shoot(Player attacker, Player victim, int x, int y) {
 		// TODO Auto-generated method stub
+		return true;
 
 	}
 

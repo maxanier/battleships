@@ -83,6 +83,7 @@ public class ComServer extends EnhancedServer {
 				e.printStackTrace();
 				this.send(ip, port, PROTOKOLL.MISSING_PARAMETER);
 			}
+			return;
 		}
 
 		if (mode == MAP_CREATION_MODE) {
@@ -106,8 +107,43 @@ public class ComServer extends EnhancedServer {
 					e.printStackTrace();
 					this.send(ip, port, PROTOKOLL.SC_MAP_INVALID);
 				}
+				return;
 			}
 		}
+		if(mode==PLAYING_MODE){
+			if(pMessage.startsWith(PROTOKOLL.CS_SHOOT)){
+				try {
+
+					String s = pMessage.substring(PROTOKOLL.CS_SHOOT.length()).trim();
+					String param[] = s.split(" ");
+					if(param.length!=3){
+						throw new StringIndexOutOfBoundsException("Cannot find the three params");
+					}
+					Player victim = players.getPlayer(Integer.parseInt(param[0]));
+					if(victim==null){
+						this.send(ip, port, PROTOKOLL.SC_PLAYER_NOT_FOUND);
+						return;
+					}
+					
+					if(!engine.shoot(players.getPlayer(ip, port),victim, Integer.parseInt(param[1]), Integer.parseInt(param[2]))){
+						this.send(ip, port, PROTOKOLL.SC_NOT_ALLOWED);
+						return;
+					}
+
+
+				} catch (StringIndexOutOfBoundsException e) {
+
+					e.printStackTrace();
+					this.send(ip, port, PROTOKOLL.MISSING_PARAMETER);
+				}
+				catch(NumberFormatException e){
+					e.printStackTrace();
+					this.send(ip, port, PROTOKOLL.MISSING_PARAMETER);
+				}
+				return;
+			}
+		}
+		this.send(ip, port, PROTOKOLL.UNKNOWN);
 
 	}
 

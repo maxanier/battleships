@@ -6,6 +6,7 @@ import java.util.Map;
 import battleships.util.Player;
 
 public interface IGameEngine {
+	
 	/**
 	 * Called when a player shoots at a cell
 	 * 
@@ -17,8 +18,9 @@ public interface IGameEngine {
 	 *            x-Koord of cell
 	 * @param y
 	 *            y-Koord of cell
+	 * @return Is allowed
 	 */
-	public void shoot(Player attacker, Player victim, int x, int y);
+	public boolean shoot(Player attacker, Player victim, int x, int y);
 
 	/**
 	 * Sets a ship placement map for the given player
