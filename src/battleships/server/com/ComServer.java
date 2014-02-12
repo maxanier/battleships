@@ -53,6 +53,7 @@ public class ComServer extends EnhancedServer {
 	private boolean startGame() {
 
 		if (engine.start(players.getPlayers())) {
+			this.sendToAll(PROTOKOLL.SC_START+" "+players.toString());
 			mode = PLAYING_MODE;
 			return true;
 		}
@@ -92,6 +93,10 @@ public class ComServer extends EnhancedServer {
 					ServerMap map = ServerMap.createFromString(s, engine.getMapSizeX(), engine.getMapSizeY());
 					players.getPlayer(ip, port).setMap(map);
 					this.send(ip, port, PROTOKOLL.SC_MAP_ACCEPTED);
+					
+					if(players.allMapsSet()){
+						startGame();
+					}
 
 				} catch (StringIndexOutOfBoundsException e) {
 

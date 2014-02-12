@@ -74,6 +74,19 @@ public class PlayerList {
 	public ArrayList<Player> getPlayers() {
 		return new ArrayList<Player>(players.values());
 	}
+	
+	/**
+	 * Checks if all Players have a map set
+	 * @return All set
+	 */
+	public boolean allMapsSet(){
+		for(Player p:players.values()){
+			if(p.getMap()==null){
+				return false;
+			}
+		}
+		return true;
+	}
 
 	/**
 	 * Simple key class for the PlayerList.
