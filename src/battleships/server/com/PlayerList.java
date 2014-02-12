@@ -87,6 +87,20 @@ public class PlayerList {
 		}
 		return true;
 	}
+	
+	/**
+	 * Returns player with given id, null if not in list
+	 * @param id Id
+	 * @return Player
+	 */
+	public Player getPlayer(int id){
+		for(Player p:players.values()){
+			if(p.getId()==id){
+				return p;
+			}
+		}
+		return null;
+	}
 
 	/**
 	 * Simple key class for the PlayerList.

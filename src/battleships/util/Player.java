@@ -13,18 +13,53 @@ public class Player {
 		this.nickname = nickname;
 		this.id = id;
 	}
+	
+	private Player(){
+		
+	}
 
 	@Override
 	public String toString() {
-		return null;// TODO Implement
+		return nickname+","+id;
 	}
 
+	/**
+	 * Creates a new Player with the string data
+	 * @param s Playerstring
+	 * @return created Player
+	 */
 	public static Player fromString(String s) {
-		return null;// TODO Implement
+		try {
+			String ss[]= s.split(",");
+			Player p=new Player();
+			p.nickname=ss[0];
+			p.id=Integer.parseInt(ss[1]);
+			if(p.nickname.equals("")){
+				p.nickname="Player";
+			}
+			return p;
+		} catch (NumberFormatException e) {
+			Logger.e("PLAYER", "Error while parsing Playerstring",e);
+			return null;
+		}
 	}
 
 	public static ArrayList<Player> getPlayerListFromString(String s) {
-		return null;// TODO Implement
+			ArrayList<Player> players=new ArrayList<Player>();
+			s=s.replace("[","");
+			s=s.replace("]", "");
+			String ss[]=s.split(",");
+			for(String sss:ss){
+				Player p=fromString(sss);
+				if(p!=null){
+					players.add(p);
+				}
+				else{
+					Logger.w("PLAYER_PLAYERLIST","PLAYER NULL");
+				}
+			}
+			return players;
+		
 	}
 
 	public boolean isRegistered() {
