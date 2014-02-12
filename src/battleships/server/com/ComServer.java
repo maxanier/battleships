@@ -33,7 +33,7 @@ public class ComServer extends EnhancedServer {
 	}
 
 	@Override
-	public void processNewConnection(String ip, int port) {
+	public void processNewEnhancedConnection(String ip, int port) {
 		if (mode != WAITING_MODE) {
 			this.send(ip, port, PROTOKOLL.SC_PLAYING);
 			return;
@@ -66,7 +66,7 @@ public class ComServer extends EnhancedServer {
 	}
 
 	@Override
-	public void processMessage(String ip, int port, String pMessage) {
+	public void processEnhancedMessage(String ip, int port, String pMessage) {
 		if (pMessage.startsWith(PROTOKOLL.CS_REGISTER)) {
 			if (mode == PLAYING_MODE) {
 				this.send(ip, port, PROTOKOLL.SC_PLAYING);
@@ -107,7 +107,7 @@ public class ComServer extends EnhancedServer {
 	}
 
 	@Override
-	public void processClosedConnection(String ip, int port) {
+	public void processClosedEnhancedConnection(String ip, int port) {
 		engine.playerLeft(players.getPlayer(ip, port));
 		players.removePlayer(ip, port);
 

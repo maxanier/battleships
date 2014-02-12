@@ -9,4 +9,10 @@ public class ComClient extends EnhancedClient {
 		// TODO Auto-generated constructor stub
 	}
 
+	@Override
+	public void processEnhancedMessage(String message) {
+		// TODO Auto-generated method stub
+		
+	}
+
 }

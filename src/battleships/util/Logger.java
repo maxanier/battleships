@@ -75,7 +75,7 @@ public class Logger {
 	 * @param msg
 	 *            Message
 	 */
-	private static void log(String msg) {
+	private static synchronized void log(String msg) {
 		if (debug && logFile != null) {
 			try {
 
