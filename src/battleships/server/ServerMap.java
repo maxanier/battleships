@@ -29,12 +29,15 @@ public class ServerMap {
 	 * @param s
 	 * @return
 	 */
-	public static ServerMap createFromString(String s,int x,int y){
+	public static ServerMap createFromString(String s,int x,int y) throws MapInvalidException{
 		if(x<1||y<1){
 		return null;
 		}
+		if(s==null||s.equals("")){
+			throw new MapInvalidException("String is empty");
+		}
 		ServerMap serverMap=new ServerMap(x,y,FieldId.WATER);
-		
+		//TODO Throw exception if invalid
 		
 		return serverMap;
 	}
@@ -117,6 +120,14 @@ public class ServerMap {
 			}
 		}
 		return false;
+	}
+	
+	public static class MapInvalidException extends Exception{
+
+		public MapInvalidException(String additionalInfos){
+			super("The map or map string is invalid.\n Additional Info: ");
+		}
+		
 	}
 	
 }

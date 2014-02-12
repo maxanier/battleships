@@ -15,7 +15,7 @@ public class PROTOKOLL {
 	//Lobby-stage
 	public final static String SC_HELLO="Hi, Please register";
 	public final static String CS_REGISTER="REGISTER"; //<nickname>
-	public final static String SC_ACCEPTED="+ACCEPTED";
+	public final static String SC_NAME_ACCEPTED="+ACCEPTED";
 	public final static String SC_FULL=ERROR+" Full";//If server is full
 	public final static String SC_PLAYING=ERROR+" Playing";//If game is running
 	public final static String SC_CREATE_MAP="CREATEMAP";
@@ -23,6 +23,7 @@ public class PROTOKOLL {
 	//Creating-map-stage
 	public final static String CS_MAP="MAP";// <ship placement map as String>
 	public final static String SC_MAP_INVALID=ERROR+" Map invalid";//If map is invalid or not enough ships are placed
+	public final static String SC_MAP_ACCEPTED="+ACCEPTED";
 	public final static String SC_START="STARTGAME";// <playerlist as String>
 	
 	//Game-stage

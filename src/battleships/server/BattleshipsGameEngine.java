@@ -34,15 +34,22 @@ public class BattleshipsGameEngine implements IGameEngine{
 	}
 
 	@Override
-	public boolean start() {
-		// TODO Auto-generated method stub
+	public boolean start(ArrayList<Player> players) {
+		
 		return false;
 	}
 
 	@Override
-	public boolean startMapCreation(ArrayList<Player> players) {
+	public int getMapSizeX() {
 		// TODO Auto-generated method stub
-		return false;
+		return 0;
 	}
+
+	@Override
+	public int getMapSizeY() {
+		// TODO Auto-generated method stub
+		return 0;
+	}
+
 
 }

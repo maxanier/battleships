@@ -2,9 +2,12 @@ package battleships.util;
 
 import java.util.ArrayList;
 
+import battleships.server.ServerMap;
+
 public class Player {
 	private String nickname;
 	private int id;
+	private ServerMap map;
 	
 	public Player(String nickname,int id){
 		this.nickname=nickname;
@@ -37,5 +40,13 @@ public class Player {
 
 	public int getId() {
 		return id;
+	}
+
+	public ServerMap getMap() {
+		return map;
+	}
+
+	public void setMap(ServerMap map) {
+		this.map = map;
 	}
 }

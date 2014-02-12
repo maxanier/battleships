@@ -1,5 +1,6 @@
 package battleships.server;
 
+import java.awt.Point;
 import java.util.ArrayList;
 import java.util.Map;
 
@@ -30,16 +31,11 @@ public interface IGameEngine {
 	
 	/**
 	 * Starts game
-	 * @param If started
-	 */
-	public boolean start();
-	
-	/**
-	 * Puts game into mapCreationMode
-	 * @param players
+	 * @param players Playerlist
 	 * @return succes
 	 */
-	public boolean startMapCreation(ArrayList<Player> players);
+	public boolean start(ArrayList<Player> players);
+	
 	
 	
 	/**
@@ -47,4 +43,8 @@ public interface IGameEngine {
 	 * @param leaving player
 	 */
 	public void playerLeft(Player player);
+	
+	public int getMapSizeX();
+	
+	public int getMapSizeY();
 }
