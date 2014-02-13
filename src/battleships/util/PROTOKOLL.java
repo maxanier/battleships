@@ -27,7 +27,7 @@ public class PROTOKOLL {
 
 	// Game-stage
 	public final static String CS_SHOOT = "SHOOT";// <playerid>(who is the victim) <x> <y>(coordinate of cell)
-	public final static String SC_SHOT_RESULT = "SHOOT_RESULT";// <playerId> <x> <y> <hit>(0 if water, 1 if ship)
+	public final static String SC_SHOT_RESULT = "SHOOT_RESULT";// <playerId> <x> <y> <newId> <sunk>(Whether a ship was completly destroyed or not=
 	public final static String SC_NOTIFY = "YOUR_TURN";// Notifies client when its his turn
 	public final static String SC_NOT_ALLOWED = ERROR + " Not allowed";// e.g. if client wants to shoot but its not his turn
 	public final static String SC_PLAYER_NOT_FOUND=ERROR+" Player not found";

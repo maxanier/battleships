@@ -1,6 +1,7 @@
 package battleships.server.com;
 
 import battleships.abiklassen.enhanced.EnhancedServer;
+import battleships.server.BattleshipsGameEngine.GameListener;
 import battleships.server.IGameEngine;
 import battleships.server.ServerMap;
 import battleships.server.ServerMap.MapInvalidException;
@@ -10,10 +11,10 @@ import battleships.util.Player;
 /**
  * Manages communication and game-stages
  * 
- * @author Max
+ * @author Max Becker
  * 
  */
-public class ComServer extends EnhancedServer {
+public class ComServer extends EnhancedServer implements GameListener{
 
 	private IGameEngine engine;
 	private PlayerList players;
@@ -152,6 +153,31 @@ public class ComServer extends EnhancedServer {
 		engine.playerLeft(players.getPlayer(ip, port));
 		players.removePlayer(ip, port);
 
+	}
+
+	@Override
+	public void notifyShotResult(Player victim, int x, int y, int newId,
+			boolean sunk) {
+		int sunkint=0;
+		if(sunk){
+			sunkint=1;
+		}
+		
+		this.sendToAll(PROTOKOLL.SC_SHOT_RESULT+" "+victim.getId()+" "+x+" "+y+" "+newId+" "+sunkint);
+		
+	}
+
+	@Override
+	public void notifyTurn(Player player) {
+		Client c=players.getPlayerClient(player);
+		this.send(c, PROTOKOLL.SC_NOTIFY);
+		
+	}
+
+	@Override
+	public void notifyEnd(Player winner) {
+		this.sendToAll(PROTOKOLL.SC_END+" "+winner.getId());
+		
 	}
 
 }
