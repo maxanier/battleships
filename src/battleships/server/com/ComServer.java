@@ -18,18 +18,16 @@ public class ComServer extends EnhancedServer implements GameListener{
 
 	private IGameEngine engine;
 	private PlayerList players;
-	private int maxConnections;
 	private int mode;
 	private final int WAITING_MODE = 0;
 	private final int MAP_CREATION_MODE = 1;
 	private final int PLAYING_MODE = 2;
 
-	public ComServer(int pPortNr, IGameEngine engine, int maxConnections) {
+	public ComServer(int pPortNr, IGameEngine engine) {
 		super(pPortNr);
 		mode = WAITING_MODE;
 		this.engine = engine;
 		players = new PlayerList();
-		this.maxConnections = maxConnections;
 
 	}
 
@@ -39,11 +37,11 @@ public class ComServer extends EnhancedServer implements GameListener{
 			this.send(ip, port, PROTOKOLL.SC_PLAYING);
 			return;
 		}
-		if (players.getSize() < maxConnections) {
+		if (players.getSize() < engine.getMaxPlayer()) {
 			int id = ip.hashCode() / 100 + port;
 			players.addPlayer(ip, port, new Player("", id));
 			this.send(ip, port, PROTOKOLL.SC_HELLO);
-			if (players.getSize() == maxConnections) {
+			if (players.getSize() == engine.getMaxPlayer()) {
 				startMapCreationStage();
 			}
 		} else {

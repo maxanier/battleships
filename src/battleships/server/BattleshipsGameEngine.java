@@ -3,27 +3,39 @@ package battleships.server;
 import java.util.ArrayList;
 import java.util.Map;
 
+import battleships.util.Logger;
 import battleships.util.Player;
 
 public class BattleshipsGameEngine implements IGameEngine {
+	
+	private boolean running;
+	private int maxPlayers;
+	private int mapSizeX;
+	private int mapSizeY;
+	private GameListener gameListener;
+	
+	public BattleshipsGameEngine(int maxPlayers,int mapSizeX,int mapSizeY){
+		running=true;//TODO check if always right
+		this.maxPlayers=maxPlayers;
+		this.mapSizeX=mapSizeX;
+		this.mapSizeY=mapSizeY;
+	}
 
 	@Override
-	public boolean shoot(Player attacker, Player victim, int x, int y) {
-		// TODO Auto-generated method stub
+	public boolean shoot(Player attacker, Player victim, int x, int y){
+		if(gameListener==null){
+			Logger.e("GAME_ENGINE","No Listener registered");
+			return false;
+		}
+
 		return true;
 
 	}
 
 	@Override
-	public boolean setPlayerMap(Player player, Map map) {
-		// TODO Auto-generated method stub
-		return false;
-	}
-
-	@Override
 	public boolean isRunning() {
-		// TODO Auto-generated method stub
-		return false;
+		
+		return running;
 	}
 
 	@Override
@@ -40,19 +52,24 @@ public class BattleshipsGameEngine implements IGameEngine {
 
 	@Override
 	public int getMapSizeX() {
-		// TODO Auto-generated method stub
-		return 0;
+		
+		return mapSizeX;
 	}
 
 	@Override
 	public int getMapSizeY() {
-		// TODO Auto-generated method stub
-		return 0;
+
+		return mapSizeY;
+	}
+	
+	public void setGameListener(GameListener listener){
+		this.gameListener=listener;
 	}
 	
 	/**
 	 * Game Listener,  a object implementing this should send the given information to the client
 	 */
+
 	public interface GameListener{
 		/**
 		 * Notify all Players about shot result
@@ -75,6 +92,17 @@ public class BattleshipsGameEngine implements IGameEngine {
 		 * @param winner Winning player
 		 */
 		public void notifyEnd(Player winner);
+	}
+
+	
+	@Override
+	public int getMaxPlayer() {
+		
+		return maxPlayers;
+	}
+	
+	public class NoListenerException extends Exception{
+		
 	}
 
 }

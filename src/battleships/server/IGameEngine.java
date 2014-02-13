@@ -22,17 +22,7 @@ public interface IGameEngine {
 	 */
 	public boolean shoot(Player attacker, Player victim, int x, int y);
 
-	/**
-	 * Sets a ship placement map for the given player
-	 * 
-	 * @param player
-	 *            Player
-	 * @param map
-	 *            Map
-	 * @return Success
-	 */
-	public boolean setPlayerMap(Player player, Map map);
-
+	
 	/**
 	 * Returns if game is running
 	 */
@@ -58,4 +48,6 @@ public interface IGameEngine {
 	public int getMapSizeX();
 
 	public int getMapSizeY();
+	
+	public int getMaxPlayer();
 }
