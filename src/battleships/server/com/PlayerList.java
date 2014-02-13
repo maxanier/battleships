@@ -3,6 +3,7 @@ package battleships.server.com;
 import java.util.ArrayList;
 import java.util.HashMap;
 
+import battleships.abiklassen.enhanced.EnhancedServer.Client;
 import battleships.util.Player;
 
 /**
@@ -101,40 +102,17 @@ public class PlayerList {
 		}
 		return null;
 	}
-
-	/**
-	 * Simple key class for the PlayerList.
-	 * 
-	 * @author Max Becker
-	 * 
-	 */
-	private class Client {
-		private String ip;
-		private int port;
-
-		public Client(String ip, int port) {
-			this.ip = ip;
-			this.port = port;
-		}
-
-		@Override
-		public boolean equals(Object o) {
-			if (this == o)
-				return true;// if same object
-			if (!(o instanceof Client))
-				return false;// if o is from a different class
-			Client client = (Client) o;
-			if (ip.equals(client.ip) && port == client.port) {
-				return true;// if client has the same ip and port
+	
+	public Client getPlayerClient(Player p){
+		for(Client c:players.keySet()){
+			if(players.get(c).equals(p)){
+				return c;
 			}
-			return false;
 		}
-
-		@Override
-		public int hashCode() {
-			return ip.hashCode() + port * 31;// Returns hashCode based on ip and port
-		}
+		return null;
 	}
+
+	
 
 	public int getSize() {
 		return players.size();

@@ -89,6 +89,49 @@ public abstract class EnhancedServer extends Server {
 		super.send(ip, port, message);
 	}
 	
+	/**
+	 * Sends a message to the given client
+	 * @param c Target client
+	 * @param message Message
+	 */
+	public void send(Client c,String message){
+		this.send(c.ip, c.port, message);
+	}
+	
+	/**
+	 * Stores client ip and port
+	 * For example used as simple key class for the PlayerList.
+	 * 
+	 * @author Max Becker
+	 */
+	public static class Client {
+		private String ip;
+		private int port;
+
+		public Client(String ip, int port) {
+			this.ip = ip;
+			this.port = port;
+		}
+
+		@Override
+		public boolean equals(Object o) {
+			if (this == o)
+				return true;// if same object
+			if (!(o instanceof Client))
+				return false;// if o is from a different class
+			Client client = (Client) o;
+			if (ip.equals(client.ip) && port == client.port) {
+				return true;// if client has the same ip and port
+			}
+			return false;
+		}
+
+		@Override
+		public int hashCode() {
+			return ip.hashCode() + port * 31;// Returns hashCode based on ip and port
+		}
+	}
+	
 	
 	/**
 	 * Eine Nachricht wurde an alle verbundenen Clients geschickt.
