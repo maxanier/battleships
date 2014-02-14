@@ -42,7 +42,7 @@ public class ServerMap {
 		}
 		ServerMap serverMap = new ServerMap(x, y, FieldId.WATER);
 		// TODO Throw exception if invalid
-
+		//TODO createMap
 		return serverMap;
 	}
 
