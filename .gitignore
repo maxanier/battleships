@@ -5,3 +5,6 @@
 *.jar
 *.war
 *.ear
+
+# Log Files #
+log.txt
