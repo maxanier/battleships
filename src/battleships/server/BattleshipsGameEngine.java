@@ -30,9 +30,38 @@ public class BattleshipsGameEngine implements IGameEngine {
 			Logger.e(TAG,"No Listener registered");
 			return false;
 		}
-
+		if(!attacker.equals(getCurrentPlayer())){
+			Logger.w(TAG, "Its not this players turn");
+			return false;
+		}
+		
+		ServerMap map=victim.getMap();
+		
+		try {
+			
+			
+			map.shoot(x, y);
+			
+			gameListener.notifyShotResult(victim, x, y, map.getFieldId(x, y), !map.shipNearby(x, y));
+		} catch (IndexOutOfBoundsException e) {
+			Logger.e(TAG, "Map index out of bound",e);
+		}
+		
+		
+		if(!map.shipsLeft()){
+			gameListener.notifyEnd(attacker);
+			end();
+		}
+		else{
+			nextPlayer();
+		}
 		return true;
 
+	}
+
+	private void end() {
+		// TODO Auto-generated method stub
+		
 	}
 
 	@Override
@@ -101,6 +130,17 @@ public class BattleshipsGameEngine implements IGameEngine {
 	public int getMaxPlayer() {
 		
 		return maxPlayers;
+	}
+	
+	private Player getCurrentPlayer(){
+		return (Player)players.getObject();
+	}
+	private void nextPlayer(){
+		players.next();
+		if(!players.hasAccess()){
+			players.toFirst();
+		}
+		gameListener.notifyTurn(getCurrentPlayer());
 	}
 	
 

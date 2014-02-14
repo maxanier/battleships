@@ -2,6 +2,7 @@ package battleships.util;
 
 import java.util.ArrayList;
 
+import battleships.abiklassen.enhanced.EnhancedServer.Client;
 import battleships.server.ServerMap;
 
 public class Player {
@@ -20,7 +21,7 @@ public class Player {
 
 	@Override
 	public String toString() {
-		return nickname+","+id;
+		return nickname+";"+id;
 	}
 
 	/**
@@ -67,6 +68,9 @@ public class Player {
 	}
 
 	public String getNickname() {
+		if(nickname==null||nickname.equals("")){
+			return "Player";
+		}
 		return nickname;
 	}
 
@@ -84,5 +88,15 @@ public class Player {
 
 	public void setMap(ServerMap map) {
 		this.map = map;
+	}
+	
+	@Override
+	public boolean equals(Object o){
+		if (this == o)
+			return true;// if same object
+		if (!(o instanceof Player))
+			return false;// if o is from a different class
+		Player p=(Player)o;
+		return(p.id==this.id);
 	}
 }

@@ -3,7 +3,7 @@ package battleships.server;
 import battleships.util.FieldId;
 
 public class ServerMap {
-	int[][] map;
+	private int[][] map;
 
 	/**
 	 * Creates a x*y map and fills it with the given id
@@ -111,6 +111,10 @@ public class ServerMap {
 
 		}
 		return false;
+	}
+	
+	public int getFieldId(int x,int y){
+		return map[x][y];
 	}
 
 	/**

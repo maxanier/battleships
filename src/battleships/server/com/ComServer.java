@@ -44,9 +44,11 @@ public class ComServer extends EnhancedServer implements GameListener{
 			int id = ip.hashCode() / 100 + port;
 			players.addPlayer(ip, port, new Player("", id));
 			this.send(ip, port, PROTOKOLL.SC_HELLO);
+			Logger.i(TAG, "Added new player ("+ip+":"+port+") ID: "+id);
 			if (players.getSize() == engine.getMaxPlayer()) {
 				startMapCreationStage();
 			}
+			
 		} else {
 			this.send(ip, port, PROTOKOLL.SC_FULL);
 		}
@@ -54,7 +56,7 @@ public class ComServer extends EnhancedServer implements GameListener{
 
 	private boolean startGame() {
 		engine.setGameListener(this);
-		this.sendToAll(PROTOKOLL.SC_START+" "+players.toString());
+		this.sendToAll(PROTOKOLL.SC_START+" "+players.getPlayerListString());
 		if (engine.start(players.getPlayers())) {
 			
 			mode = PLAYING_MODE;
@@ -141,13 +143,14 @@ public class ComServer extends EnhancedServer implements GameListener{
 					}
 
 
-				} catch (StringIndexOutOfBoundsException e) {
+				}
+				catch (StringIndexOutOfBoundsException e) {
 
-					e.printStackTrace();
+					Logger.e(TAG, "Missing Parameter",e);
 					this.send(ip, port, PROTOKOLL.MISSING_PARAMETER);
 				}
 				catch(NumberFormatException e){
-					e.printStackTrace();
+					Logger.e(TAG, "Parameter are no Integers" , e);
 					this.send(ip, port, PROTOKOLL.MISSING_PARAMETER);
 				}
 				return;
@@ -180,6 +183,7 @@ public class ComServer extends EnhancedServer implements GameListener{
 	public void notifyTurn(Player player) {
 		Client c=players.getPlayerClient(player);
 		this.send(c, PROTOKOLL.SC_NOTIFY);
+		Logger.i(TAG, "Next Player: "+player);
 		
 	}
 
