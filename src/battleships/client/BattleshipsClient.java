@@ -1,5 +1,5 @@
 package battleships.client;
 
-public class BattleshipsClient {
+public class BattleshipsClient implements IClientEngine{
 
 }
