@@ -98,7 +98,7 @@ public class ClientGUI extends JPanel {
 		}
 		
 		public void fieldPressed(int x, int y) {
-			
+			//TODO Action for button press
 		}
 	}
 
