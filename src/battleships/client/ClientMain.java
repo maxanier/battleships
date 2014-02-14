@@ -20,7 +20,7 @@ public class ClientMain {
 		JFrame f = new JFrame("Battleships Client");
 		f.add(gui);
 		f.setResizable(true);
-		f.setSize(500, 500);
+		f.setSize(500, 600);
 		f.setVisible(true);
 	}
 
