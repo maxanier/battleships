@@ -1,10 +1,10 @@
 package battleships.server.com;
 
 import battleships.abiklassen.enhanced.EnhancedServer;
-import battleships.server.BattleshipsGameEngine.GameListener;
 import battleships.server.IGameEngine;
 import battleships.server.ServerMap;
 import battleships.server.ServerMap.MapInvalidException;
+import battleships.util.Logger;
 import battleships.util.PROTOKOLL;
 import battleships.util.Player;
 
@@ -22,6 +22,7 @@ public class ComServer extends EnhancedServer implements GameListener{
 	private final int WAITING_MODE = 0;
 	private final int MAP_CREATION_MODE = 1;
 	private final int PLAYING_MODE = 2;
+	private final String TAG="ComServer";
 
 	public ComServer(int pPortNr, IGameEngine engine) {
 		super(pPortNr);
@@ -34,7 +35,9 @@ public class ComServer extends EnhancedServer implements GameListener{
 	@Override
 	public void processNewEnhancedConnection(String ip, int port) {
 		if (mode != WAITING_MODE) {
+			Logger.w(TAG, "Cannot accept new players");
 			this.send(ip, port, PROTOKOLL.SC_PLAYING);
+			this.closeConnection(ip, port);
 			return;
 		}
 		if (players.getSize() < engine.getMaxPlayer()) {
@@ -50,17 +53,21 @@ public class ComServer extends EnhancedServer implements GameListener{
 	}
 
 	private boolean startGame() {
-
+		engine.setGameListener(this);
+		this.sendToAll(PROTOKOLL.SC_START+" "+players.toString());
 		if (engine.start(players.getPlayers())) {
-			this.sendToAll(PROTOKOLL.SC_START+" "+players.toString());
+			
 			mode = PLAYING_MODE;
+			Logger.i(TAG, "Started game");
 			return true;
 		}
+		Logger.w(TAG,"Failed to start game");
 		return false;
 
 	}
 
 	private void startMapCreationStage() {
+		Logger.i(TAG, "Started map creation phase");
 		mode = MAP_CREATION_MODE;
 		this.sendToAll(PROTOKOLL.SC_CREATE_MAP);
 	}
@@ -69,6 +76,7 @@ public class ComServer extends EnhancedServer implements GameListener{
 	public void processEnhancedMessage(String ip, int port, String pMessage) {
 		if (pMessage.startsWith(PROTOKOLL.CS_REGISTER)) {
 			if (mode == PLAYING_MODE) {
+				Logger.w(TAG, "Already playing, so no new name can be set");
 				this.send(ip, port, PROTOKOLL.SC_PLAYING);
 				return;
 			}
@@ -76,6 +84,7 @@ public class ComServer extends EnhancedServer implements GameListener{
 			try {
 				String nickname = pMessage.substring(PROTOKOLL.CS_REGISTER.length()).trim();
 				players.getPlayer(ip, port).setNickname(nickname);
+				Logger.i(TAG, "Player set name to "+nickname);
 				this.send(ip, port, PROTOKOLL.SC_NAME_ACCEPTED);
 			} catch (StringIndexOutOfBoundsException e) {
 
@@ -92,6 +101,7 @@ public class ComServer extends EnhancedServer implements GameListener{
 					String s = pMessage.substring(PROTOKOLL.CS_MAP.length()).trim();
 					ServerMap map = ServerMap.createFromString(s, engine.getMapSizeX(), engine.getMapSizeY());
 					players.getPlayer(ip, port).setMap(map);
+					Logger.i(TAG, "Player set map to "+s);
 					this.send(ip, port, PROTOKOLL.SC_MAP_ACCEPTED);
 					
 					if(players.allMapsSet()){
@@ -124,6 +134,7 @@ public class ComServer extends EnhancedServer implements GameListener{
 						return;
 					}
 					
+					Logger.i(TAG, "Shoot command found. Victim: "+victim.getNickname()+" X: "+Integer.parseInt(param[1])+" Y: "+ Integer.parseInt(param[2]));
 					if(!engine.shoot(players.getPlayer(ip, port),victim, Integer.parseInt(param[1]), Integer.parseInt(param[2]))){
 						this.send(ip, port, PROTOKOLL.SC_NOT_ALLOWED);
 						return;
@@ -177,5 +188,7 @@ public class ComServer extends EnhancedServer implements GameListener{
 		this.sendToAll(PROTOKOLL.SC_END+" "+winner.getId());
 		
 	}
+	
+	
 
 }

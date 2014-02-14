@@ -1,8 +1,9 @@
 package battleships.server;
 
 import java.util.ArrayList;
-import java.util.Map;
 
+import battleships.abiklassen.List;
+import battleships.server.com.GameListener;
 import battleships.util.Logger;
 import battleships.util.Player;
 
@@ -13,9 +14,11 @@ public class BattleshipsGameEngine implements IGameEngine {
 	private int mapSizeX;
 	private int mapSizeY;
 	private GameListener gameListener;
+	private List players;
+	private final String TAG="GAME_ENGINE";
 	
 	public BattleshipsGameEngine(int maxPlayers,int mapSizeX,int mapSizeY){
-		running=true;//TODO check if always right
+		running=false;//TODO check if always right
 		this.maxPlayers=maxPlayers;
 		this.mapSizeX=mapSizeX;
 		this.mapSizeY=mapSizeY;
@@ -24,7 +27,7 @@ public class BattleshipsGameEngine implements IGameEngine {
 	@Override
 	public boolean shoot(Player attacker, Player victim, int x, int y){
 		if(gameListener==null){
-			Logger.e("GAME_ENGINE","No Listener registered");
+			Logger.e(TAG,"No Listener registered");
 			return false;
 		}
 
@@ -45,9 +48,34 @@ public class BattleshipsGameEngine implements IGameEngine {
 	}
 
 	@Override
-	public boolean start(ArrayList<Player> players) {
-
-		return false;
+	public boolean start(ArrayList<Player> p) {
+		
+		if(running){
+			Logger.w(TAG,"Game is already running and can´t be started");
+			return false;
+		}
+		if(gameListener ==null){
+			Logger.e(TAG, "No GameListener registered!");
+			return false;
+		}
+		Logger.i(TAG, "Trying to start the game. "+p.size()+" players registered");
+		
+		players=new List();
+		int starter=(int) Math.round(Math.random()*p.size());
+		
+		Logger.i(TAG, "Start player: "+starter);
+		
+		for(int i =starter-1;i<p.size();i++){
+			players.append(p.get(i));
+		}
+		for(int i=0;i<starter-1;i++){
+			players.append(p.get(i));
+		}
+		players.toFirst();
+		
+		gameListener.notifyTurn((Player)players.getObject());
+		
+		return true;
 	}
 
 	@Override
@@ -66,33 +94,7 @@ public class BattleshipsGameEngine implements IGameEngine {
 		this.gameListener=listener;
 	}
 	
-	/**
-	 * Game Listener,  a object implementing this should send the given information to the client
-	 */
-
-	public interface GameListener{
-		/**
-		 * Notify all Players about shot result
-		 * @param victim Victim player
-		 * @param x X-Coord
-		 * @param y Y-Coord
-		 * @param newId New FieldId
-		 * @param sunk whether a ship was completly destroyed or not
-		 */
-		public void notifyShotResult(Player victim,int x,int y,int newId,boolean sunk);
-		
-		/**
-		 * Notify the player, which is next
-		 * @param player Next player
-		 */
-		public void notifyTurn(Player player);
-		
-		/**
-		 * Notify all players that the game is over
-		 * @param winner Winning player
-		 */
-		public void notifyEnd(Player winner);
-	}
+	
 
 	
 	@Override
@@ -101,8 +103,6 @@ public class BattleshipsGameEngine implements IGameEngine {
 		return maxPlayers;
 	}
 	
-	public class NoListenerException extends Exception{
-		
-	}
+
 
 }

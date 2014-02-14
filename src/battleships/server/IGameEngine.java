@@ -3,6 +3,7 @@ package battleships.server;
 import java.util.ArrayList;
 import java.util.Map;
 
+import battleships.server.com.GameListener;
 import battleships.util.Player;
 
 public interface IGameEngine {
@@ -50,4 +51,6 @@ public interface IGameEngine {
 	public int getMapSizeY();
 	
 	public int getMaxPlayer();
+	
+	public void setGameListener(GameListener listener);
 }
