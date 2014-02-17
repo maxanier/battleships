@@ -44,14 +44,15 @@ public class BattleshipsClient implements IClientEngine{
 		
 	}
 
+
 	@Override
-	public void nicknameSet(boolean success) {
+	public void mapSet(boolean success) {
 		// TODO Auto-generated method stub
 		
 	}
 
 	@Override
-	public void mapSet(boolean success) {
+	public void notifyError(String message) {
 		// TODO Auto-generated method stub
 		
 	}

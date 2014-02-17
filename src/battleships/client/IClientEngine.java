@@ -40,17 +40,19 @@ public interface IClientEngine {
 	
 	public void setGameListener(GameListener l);
 	
-	/**
-	 * Should be called if the server responded to setting nickname
-	 * @param success whether succesful or not
-	 */
-	public void nicknameSet(boolean success);
+
 	
 	/**
 	 * Should be called if the server responded to setting map
 	 * @param success whether succesful or not
 	 */
 	public void mapSet(boolean success);
+	
+	/**
+	 * Should be called if any error occurs and should be shown to the user
+	 * @param message Errormessage
+	 */
+	public void notifyError(String message);
 	
 	
 }

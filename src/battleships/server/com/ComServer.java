@@ -51,6 +51,7 @@ public class ComServer extends EnhancedServer implements GameListener{
 			
 		} else {
 			this.send(ip, port, PROTOKOLL.SC_FULL);
+			this.closeConnection(ip, port);
 		}
 	}
 
