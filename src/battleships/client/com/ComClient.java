@@ -1,14 +1,19 @@
 package battleships.client.com;
 
 import battleships.abiklassen.enhanced.EnhancedClient;
+import battleships.server.IGameEngine;
+import battleships.util.PROTOKOLL;
 import battleships.util.Player;
 
 public class ComClient extends EnhancedClient implements GameListener{
-
+	private IGameEngine engine;
+	private boolean waitForNameAccepted=false;
+	private boolean waitForMapAccepted=false;
+	private boolean waitForShotAccepted=false;
 	
-	public ComClient(String pIPAdresse, int pPortNr) {
+	public ComClient(String pIPAdresse, int pPortNr, IGameEngine engine) {
 		super(pIPAdresse, pPortNr);
-		// TODO Auto-generated constructor stub
+		this.engine=engine;
 	}
 
 	@Override
@@ -19,20 +24,20 @@ public class ComClient extends EnhancedClient implements GameListener{
 
 	@Override
 	public void setNickname(String n) {
-		// TODO Auto-generated method stub
-		
+		this.send(PROTOKOLL.CS_REGISTER+" "+n);
+		waitForNameAccepted=true;
 	}
 
 	@Override
 	public void sendMap(String map) {
-		// TODO Auto-generated method stub
-	
+		this.send(PROTOKOLL.CS_MAP+" "+map);
+		waitForNameAccepted=true;
 	}
 
 	@Override
 	public void shoot(Player victim, int x, int y) {
-		// TODO Auto-generated method stub
-	
+		this.send(PROTOKOLL.CS_SHOOT+" "+victim.getId()+" "+x+" "+y);
+		waitForShotAccepted=true;
 	}
 
 }
