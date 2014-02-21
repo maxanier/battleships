@@ -4,6 +4,7 @@ import java.awt.Component;
 import java.util.ArrayList;
 
 import javax.swing.JFrame;
+import javax.swing.JOptionPane;
 
 import battleships.client.com.ComClient;
 import battleships.client.com.GameListener;
@@ -24,6 +25,17 @@ public class BattleshipsClient {
 	private String serverIp;
 	
 	public BattleshipsClient(){
+		
+		String s = (String)JOptionPane.showInputDialog(
+		                    null,
+		                    "Enter server ip",
+		                    "Choose Ip",
+		                    JOptionPane.PLAIN_MESSAGE,
+		                    null,
+		                    null,
+		                    "");
+		//TODO check ip
+		
 		engine=new ClientGameEngine();
 		comClient=new ComClient(serverIp,CONSTANTS.PORT,engine);
 	}
