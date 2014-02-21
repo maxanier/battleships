@@ -9,19 +9,11 @@ import javax.swing.JDialog;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 
-public class GameFieldBuilderGUI {
-	
-	class BuilderGameField extends GameField {
-
-		public BuilderGameField(int size) {
-			super(size);
-		}
-		
-	}
+public class GameFieldBuilderGUI extends JPanel{
 	private GameField field;
-	private JLabel l_ships;
 	private JButton b_done;
-	private JPanel p_panel;
+	private JButton[] b_ships;
+	private int[] shipAmounts;
 	
 
 	public GameFieldBuilderGUI(int size) {
@@ -29,34 +21,49 @@ public class GameFieldBuilderGUI {
 		d.setSize(400,400);
 		d.setResizable(true);
 
-		field = new GameField(size);
+		field = new GameField(size, 1);
 		d.add(field);
 		field.initButtons(Color.BLUE);
-
-		l_ships = new JLabel();
-		initLShips(size/10, size/10, size/10, size/5,
-				size/5);
 		
+		shipAmounts = new int[5];
+		for(int i=0; i<3; i++)
+			shipAmounts[i] = size/10;
+		for(int i=3;i<5;i++)
+			shipAmounts[i] = size/5;
+		
+		b_ships = new JButton[5];
+		b_ships[0] = new JButton("Aircraft Carrier: " + shipAmounts[0]);
+		b_ships[1] = new JButton("Battleship: " + shipAmounts[1]);
+		b_ships[2] = new JButton("Cruiser: " + shipAmounts[2]);
+		b_ships[3] = new JButton("Destroyer: " + shipAmounts[3]);
+		b_ships[4] = new JButton("Submarine: " + shipAmounts[4]);
+		
+		for(int i=0; i<5;i++)
+			b_ships[i].addActionListener(new ActionListener() {
+				public void actionPerformed(ActionEvent e) {
+					//TODO Button clicked
+					for(int i=0; i<5; i++)
+						if((JButton) e.getSource() == b_ships[i]) {
+							if(i == field.getMode()-1 || i == field.getMode()*(-1)-1)
+								field.setMode(field.getMode()*(-1));
+							else
+								field.setMode(i+1);
+						}
+				}
+			});
+
 		b_done = new JButton("Done");
 		b_done.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				//TODO Done button
 			}
 		});
-		p_panel = new JPanel();
-		p_panel.add(l_ships);
-		p_panel.add(b_done);
 		
 		d.add(field);
-		d.add(p_panel);
+		add(b_done);
+		for(int i=0;i<b_ships.length;i++) 
+			add(b_ships[i]);
 		d.setVisible(true);
-	}
-
-	public void initLShips(int a, int b, int s, int c, int p) {
-		l_ships.setText("<html>Aircraft Carriers: " + a
-				+ "<br>Battleships: " + b + "<br>Submarines: " + s
-				+ "<br>Cruisers: " + c + "<br>Patrol Boats: " + p
-				+ "</html>");
 	}
 }
 

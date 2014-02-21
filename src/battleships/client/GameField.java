@@ -5,9 +5,13 @@ import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseListener;
 
 import javax.swing.JButton;
 import javax.swing.JPanel;
+
+import battleships.util.FieldId;
 
 import Exceptions.OutOfBoundsException;
 
@@ -36,10 +40,13 @@ class GameField extends JPanel {
 		}
 		
 	private GFButton[][] b_fields;
+	int mode;
+	boolean orientation = true;
 
-	public GameField(int size) {
+	public GameField(int size, int pMode) {
 		super(new GridBagLayout());
 		b_fields = new GFButton[size][size];
+		mode= pMode;
 	}
 
 	// Initializes all buttons and sets their color to clr
@@ -51,9 +58,29 @@ class GameField extends JPanel {
 				b_fields[i][j] = new GFButton(" ", i, j);
 				b_fields[i][j].addActionListener(new ActionListener() {
 					public void actionPerformed(ActionEvent e) {
+					}
+				});
+				b_fields[i][j].addMouseListener(new MouseListener() {
+
+					@Override
+					public void mouseClicked(MouseEvent e) {
 						GFButton src = (GFButton) e.getSource();
 						fieldPressed(src.getCoordX(), src.getCoordY());
 					}
+					@Override
+					public void mouseEntered(MouseEvent e) {
+						GFButton src = (GFButton) e.getSource();
+						fieldEntered(src.getCoordX(), src.getCoordY());
+					}
+					@Override
+					public void mouseExited(MouseEvent e) {
+						GFButton src = (GFButton) e.getSource();
+						fieldExited(src.getCoordX(), src.getCoordY());
+					}
+					@Override
+					public void mousePressed(MouseEvent e) {}
+					@Override
+					public void mouseReleased(MouseEvent e) {}
 				});
 				gbc.gridy = j;
 				if (clr != null)
@@ -95,7 +122,21 @@ class GameField extends JPanel {
 	}
 	
 	public void fieldPressed(int x, int y) {
-		//TODO Action for button press
+		//TODO Field pressed
+	}
+	public void fieldEntered(int x, int y) {
+		//TODO Field entered
+		//If building mode is active
+		if(mode!=0) {
+			
+		}
+		//If playing mode is active
+		else {
+			
+		}
+	}
+	public void fieldExited(int x, int y) {
+		//TODO Field exited
 	}
 	
 	
@@ -105,17 +146,22 @@ class GameField extends JPanel {
 			s = s + "\n";
 			for(int j = 0; j<b_fields.length;i++) {
 				if(b_fields[i][j].getBackground() == Color.BLUE)
-					s = s + "w";
+					s = s + FieldId.WATER;
 				else if(b_fields[i][j].getBackground() == Color.BLACK)
-					s = s + "s";
-				else if(b_fields[i][j].getBackground() == Color.GRAY)
-					s = s + "g";
+					s = s + FieldId.SHIP;
 				else if(b_fields[i][j].getBackground() == Color.RED)
-					s = s + "r";
+					s = s + FieldId.SUNKEN_SHIP;
 				else
-					s = s + "u";
+					s = s + FieldId.UNKNOWN;
 			}
 		}
 		return s;
+	}
+	
+	public void setMode(int pMode) {
+		mode = pMode;
+	}
+	public int getMode() {
+		return mode;
 	}
 }
