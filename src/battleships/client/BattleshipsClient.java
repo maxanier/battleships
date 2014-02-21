@@ -5,72 +5,30 @@ import java.util.ArrayList;
 
 import javax.swing.JFrame;
 
+import battleships.client.com.ComClient;
 import battleships.client.com.GameListener;
+import battleships.util.CONSTANTS;
 import battleships.util.Player;
 
-public class BattleshipsClient implements IClientEngine{
+/**
+ * Main Client class.
+ * Creates ComServer and engine
+ * It may do more later
+ * @author Max Becker
+ *
+ */
+public class BattleshipsClient {
 
-	private GameListener gameListener;
-	private ClientGUI gui;
-	@Override
-	public void shotResult(Player victim, int x, int y, int newId, boolean sunk) {
-		// TODO Auto-generated method stub
-		
-	}
-
-	@Override
-	public void notifyYourTurn() {
-		// TODO Auto-generated method stub
-		
-	}
-
-	@Override
-	public void notifyCreateMap() {
-		// TODO Auto-generated method stub
-		
-	}
-
-	@Override
-	public void startGame(ArrayList<Player> players) {
-		// TODO Auto-generated method stub
-		
-	}
-
-	@Override
-	public void notifyConnected() {
-		// TODO Auto-generated method stub
-		
-	}
-
-	@Override
-	public void setGameListener(GameListener l) {
-		gameListener=l;
-		
-	}
-
-
-	@Override
-	public void mapSet(boolean success) {
-		// TODO Auto-generated method stub
-		
-	}
-
-	@Override
-	public void notifyError(String message) {
-		// TODO Auto-generated method stub
-		
+	private ComClient comClient;
+	private ClientGameEngine engine;
+	private String serverIp;
+	
+	public BattleshipsClient(){
+		engine=new ClientGameEngine();
+		comClient=new ComClient(serverIp,CONSTANTS.PORT,engine);
 	}
 	
-	public void gameFieldGUIBuilder() {
-		
-	}
-	public void createGUI(int size) {
-		gui = new ClientGUI(size);
-		JFrame f = new JFrame("Battleships Client");
-		f.add(gui);
-		f.setResizable(true);
-		f.setSize(500, 600);
-		f.setVisible(true);
-	}
+	
+
 
 }
