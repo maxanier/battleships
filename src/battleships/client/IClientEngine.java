@@ -14,13 +14,13 @@ public interface IClientEngine {
 	
 	/**
 	 * A field was shot.
-	 * @param victim Victim player
+	 * @param victim Victim player id
 	 * @param x X-Coord
 	 * @param y Y-Coord
 	 * @param newId New FieldId
 	 * @param sunk whether a ship was completly destroyed or not
 	 */
-	public void shotResult(Player victim,int x,int y,int newId, boolean sunk);
+	public void shotResult(int victimId,int x,int y,int newId, boolean sunk);
 	
 	/**
 	 * Should be called if its the clients turn.
