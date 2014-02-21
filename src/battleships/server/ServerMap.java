@@ -40,9 +40,29 @@ public class ServerMap {
 		if (s == null || s.equals("")) {
 			throw new MapInvalidException("String is empty");
 		}
+		if(x!=Integer.parseInt(s.split("\n")[0])||y!=x){
+			throw new MapInvalidException("Mapsize is invalid");
+		}
+		String[] map=s.split("\n");
+	
 		ServerMap serverMap = new ServerMap(x, y, FieldId.WATER);
-		// TODO Throw exception if invalid
-		//TODO createMap
+		
+		try {
+			for(int i=0;i<x;i++){
+				String row=map[i+1];
+				for(int j=0;j<y;j++){
+					
+					serverMap.map[i][j]=row.charAt(j);
+				}
+			}
+		} catch (IndexOutOfBoundsException e) {
+			e.printStackTrace();
+			throw new MapInvalidException("Map doesn´t fit Mapsize");
+		}
+		
+		if(!serverMap.isValid()){
+			throw new MapInvalidException("Ship placement is false");
+		}
 		return serverMap;
 	}
 
