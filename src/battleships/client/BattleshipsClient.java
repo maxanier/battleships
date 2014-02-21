@@ -1,6 +1,9 @@
 package battleships.client;
 
+import java.awt.Component;
 import java.util.ArrayList;
+
+import javax.swing.JFrame;
 
 import battleships.client.com.GameListener;
 import battleships.util.Player;
@@ -8,6 +11,7 @@ import battleships.util.Player;
 public class BattleshipsClient implements IClientEngine{
 
 	private GameListener gameListener;
+	private ClientGUI gui;
 	@Override
 	public void shotResult(Player victim, int x, int y, int newId, boolean sunk) {
 		// TODO Auto-generated method stub
@@ -55,6 +59,18 @@ public class BattleshipsClient implements IClientEngine{
 	public void notifyError(String message) {
 		// TODO Auto-generated method stub
 		
+	}
+	
+	public void gameFieldGUIBuilder() {
+		
+	}
+	public void createGUI(int size) {
+		gui = new ClientGUI(size);
+		JFrame f = new JFrame("Battleships Client");
+		f.add(gui);
+		f.setResizable(true);
+		f.setSize(500, 600);
+		f.setVisible(true);
 	}
 
 }
