@@ -3,6 +3,46 @@ package battleships.server;
 import battleships.util.FieldId;
 
 public class ServerMap {
+	/**
+	 * Creates a new ServerMap from String
+	 * 
+	 * @param s
+	 * @return
+	 */
+	public static ServerMap createFromString(String s, int x, int y)
+			throws MapInvalidException {
+		if (x < 1 || y < 1) {
+			return null;
+		}
+		if (s == null || s.equals("")) {
+			throw new MapInvalidException("String is empty");
+		}
+		if (x != Integer.parseInt(s.split("\n")[0]) || y != x) {
+			throw new MapInvalidException("Mapsize is invalid");
+		}
+		String[] map = s.split("\n");
+
+		ServerMap serverMap = new ServerMap(x, y, FieldId.WATER);
+
+		try {
+			for (int i = 0; i < x; i++) {
+				String row = map[i + 1];
+				for (int j = 0; j < y; j++) {
+
+					serverMap.map[i][j] = row.charAt(j);
+				}
+			}
+		} catch (IndexOutOfBoundsException e) {
+			e.printStackTrace();
+			throw new MapInvalidException("Map doesn´t fit Mapsize");
+		}
+
+		if (!serverMap.isValid()) {
+			throw new MapInvalidException("Ship placement is false");
+		}
+		return serverMap;
+	}
+
 	private int[][] map;
 
 	/**
@@ -27,43 +67,8 @@ public class ServerMap {
 		}
 	}
 
-	/**
-	 * Creates a new ServerMap from String
-	 * 
-	 * @param s
-	 * @return
-	 */
-	public static ServerMap createFromString(String s, int x, int y) throws MapInvalidException {
-		if (x < 1 || y < 1) {
-			return null;
-		}
-		if (s == null || s.equals("")) {
-			throw new MapInvalidException("String is empty");
-		}
-		if(x!=Integer.parseInt(s.split("\n")[0])||y!=x){
-			throw new MapInvalidException("Mapsize is invalid");
-		}
-		String[] map=s.split("\n");
-	
-		ServerMap serverMap = new ServerMap(x, y, FieldId.WATER);
-		
-		try {
-			for(int i=0;i<x;i++){
-				String row=map[i+1];
-				for(int j=0;j<y;j++){
-					
-					serverMap.map[i][j]=row.charAt(j);
-				}
-			}
-		} catch (IndexOutOfBoundsException e) {
-			e.printStackTrace();
-			throw new MapInvalidException("Map doesn´t fit Mapsize");
-		}
-		
-		if(!serverMap.isValid()){
-			throw new MapInvalidException("Ship placement is false");
-		}
-		return serverMap;
+	public int getFieldId(int x, int y) {
+		return map[x][y];
 	}
 
 	/**
@@ -76,24 +81,8 @@ public class ServerMap {
 	}
 
 	/**
-	 * Shoots at the given Location. If a shippart is hit, it is set to sunk.
-	 * 
-	 * @param x
-	 *            X-Coord
-	 * @param y
-	 *            Y-Coord
-	 * @return Hit
-	 */
-	public boolean shoot(int x, int y) {
-		if (map[x][y] == FieldId.SHIP) {
-			map[x][y] = FieldId.SUNKEN_SHIP;
-			return true;
-		}
-		return false;
-	}
-
-	/**
-	 * Checks if there is a shippart in the four adjacent cells. Can be used to check if a ship is completly destroyed
+	 * Checks if there is a shippart in the four adjacent cells. Can be used to
+	 * check if a ship is completly destroyed
 	 * 
 	 * @param x
 	 *            X-Coord
@@ -132,10 +121,6 @@ public class ServerMap {
 		}
 		return false;
 	}
-	
-	public int getFieldId(int x,int y){
-		return map[x][y];
-	}
 
 	/**
 	 * Checks if there are any ship parts left, which are not sunk.
@@ -149,6 +134,23 @@ public class ServerMap {
 					return true;
 				}
 			}
+		}
+		return false;
+	}
+
+	/**
+	 * Shoots at the given Location. If a shippart is hit, it is set to sunk.
+	 * 
+	 * @param x
+	 *            X-Coord
+	 * @param y
+	 *            Y-Coord
+	 * @return Hit
+	 */
+	public boolean shoot(int x, int y) {
+		if (map[x][y] == FieldId.SHIP) {
+			map[x][y] = FieldId.SUNKEN_SHIP;
+			return true;
 		}
 		return false;
 	}

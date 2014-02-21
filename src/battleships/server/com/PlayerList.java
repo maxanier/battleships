@@ -7,7 +7,8 @@ import battleships.abiklassen.enhanced.EnhancedServer.Client;
 import battleships.util.Player;
 
 /**
- * Manages Players at serverside. Saves players in a hashmap with a client object, consisting of ip and port, as key.
+ * Manages Players at serverside. Saves players in a hashmap with a client
+ * object, consisting of ip and port, as key.
  * 
  * @author Max Becker
  * 
@@ -32,14 +33,33 @@ public class PlayerList {
 	}
 
 	/**
-	 * Removes player from List
+	 * Checks if all Players have a map set
 	 * 
-	 * @param ip
-	 * @param port
-	 * @return whether player existed or not
+	 * @return All set
 	 */
-	public boolean removePlayer(String ip, Integer port) {
-		return players.remove(new Client(ip, port)) != null;
+	public boolean allMapsSet() {
+		for (Player p : players.values()) {
+			if (p.getMap() == null) {
+				return false;
+			}
+		}
+		return true;
+	}
+
+	/**
+	 * Returns player with given id, null if not in list
+	 * 
+	 * @param id
+	 *            Id
+	 * @return Player
+	 */
+	public Player getPlayer(int id) {
+		for (Player p : players.values()) {
+			if (p.getId() == id) {
+				return p;
+			}
+		}
+		return null;
 	}
 
 	/**
@@ -58,8 +78,18 @@ public class PlayerList {
 		return null;
 	}
 
+	public Client getPlayerClient(Player p) {
+		for (Client c : players.keySet()) {
+			if (players.get(c).equals(p)) {
+				return c;
+			}
+		}
+		return null;
+	}
+
 	/**
-	 * Returns String representation of a ArrayList with all Players, which can be sent to the clients.
+	 * Returns String representation of a ArrayList with all Players, which can
+	 * be sent to the clients.
 	 * 
 	 * @return String representation
 	 */
@@ -75,46 +105,19 @@ public class PlayerList {
 	public ArrayList<Player> getPlayers() {
 		return new ArrayList<Player>(players.values());
 	}
-	
-	/**
-	 * Checks if all Players have a map set
-	 * @return All set
-	 */
-	public boolean allMapsSet(){
-		for(Player p:players.values()){
-			if(p.getMap()==null){
-				return false;
-			}
-		}
-		return true;
-	}
-	
-	/**
-	 * Returns player with given id, null if not in list
-	 * @param id Id
-	 * @return Player
-	 */
-	public Player getPlayer(int id){
-		for(Player p:players.values()){
-			if(p.getId()==id){
-				return p;
-			}
-		}
-		return null;
-	}
-	
-	public Client getPlayerClient(Player p){
-		for(Client c:players.keySet()){
-			if(players.get(c).equals(p)){
-				return c;
-			}
-		}
-		return null;
-	}
-
-	
 
 	public int getSize() {
 		return players.size();
+	}
+
+	/**
+	 * Removes player from List
+	 * 
+	 * @param ip
+	 * @param port
+	 * @return whether player existed or not
+	 */
+	public boolean removePlayer(String ip, Integer port) {
+		return players.remove(new Client(ip, port)) != null;
 	}
 }
