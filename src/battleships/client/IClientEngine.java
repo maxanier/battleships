@@ -54,5 +54,11 @@ public interface IClientEngine {
 	 */
 	public void notifyError(String message);
 	
+	/**
+	 * Should be called if the game ends
+	 * @param winnerId Id of winning player
+	 */
+	public void notifyEnd(int winnerId);
+	
 	
 }
