@@ -9,6 +9,8 @@ import javax.swing.JDialog;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 
+import battleships.util.CONSTANTS;
+
 public class GameFieldBuilderGUI extends JPanel{
 	private GameField field;
 	private JButton b_done;
@@ -25,11 +27,7 @@ public class GameFieldBuilderGUI extends JPanel{
 		d.add(field);
 		field.initButtons(Color.BLUE);
 		
-		shipAmounts = new int[5];
-		for(int i=0; i<3; i++)
-			shipAmounts[i] = size/10;
-		for(int i=3;i<5;i++)
-			shipAmounts[i] = size/5;
+		shipAmounts=CONSTANTS.getShipAmount();
 		
 		b_ships = new JButton[5];
 		b_ships[0] = new JButton("Aircraft Carrier: " + shipAmounts[0]);
