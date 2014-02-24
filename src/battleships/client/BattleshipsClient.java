@@ -22,11 +22,12 @@ public class BattleshipsClient {
 
 	private ComClient comClient;
 	private ClientGameEngine engine;
-	private String serverIp;
 	
 	public BattleshipsClient(){
 		
-		String s = (String)JOptionPane.showInputDialog(
+		String ip;
+		do{
+		ip = (String)JOptionPane.showInputDialog(
 		                    null,
 		                    "Enter server ip",
 		                    "Choose Ip",
@@ -34,10 +35,10 @@ public class BattleshipsClient {
 		                    null,
 		                    null,
 		                    "");
-		//TODO check ip
+		}while(ip==null||ip.equals(""));
 		
 		engine=new ClientGameEngine();
-		comClient=new ComClient(serverIp,CONSTANTS.PORT,engine);
+		comClient=new ComClient(ip,CONSTANTS.PORT,engine);
 	}
 	
 	

@@ -3,6 +3,7 @@ package battleships.client;
 import java.util.ArrayList;
 
 import javax.swing.JFrame;
+import javax.swing.JOptionPane;
 
 import battleships.client.com.GameListener;
 import battleships.util.CONSTANTS;
@@ -13,17 +14,32 @@ import battleships.util.Player;
  * @author Max Becker
  *
  */
-public class ClientGameEngine implements IClientEngine{
+public class ClientGameEngine implements IClientEngine, IGUIListener{
 
 	private ClientGUI gui;
 	private GameListener gameListener;
+	private boolean playing;
+	private ArrayList<Player> players;
+	private int playerId;
+	private Player enemy;
 	
 	public ClientGameEngine(){
 		createGUI(CONSTANTS.GAME_SIZE);
 	}
 	@Override
-	public void notifyConnected() {
-		// TODO Auto-generated method stub
+	public void notifyConnected(int id) {
+		playerId=id;
+		String nickname =(String)JOptionPane.showInputDialog(
+                null,
+                "Enter nickname",
+                "Choose nickname",
+                JOptionPane.PLAIN_MESSAGE,
+                null,
+                null,
+                "");
+		if(nickname!=null&&!nickname.equals("")){
+			gameListener.setNickname(nickname);
+		}
 		
 	}
 
@@ -47,7 +63,14 @@ public class ClientGameEngine implements IClientEngine{
 
 	@Override
 	public void startGame(ArrayList<Player> players) {
-		// TODO Auto-generated method stub
+		this.players=players;
+		for(Player p:players){
+			if(p.getId()!=playerId){
+				enemy=p;
+			}
+		}
+		
+		//TODO start
 		
 	}
 
@@ -65,7 +88,7 @@ public class ClientGameEngine implements IClientEngine{
 
 	@Override
 	public void notifyError(String message) {
-		// TODO Auto-generated method stub
+		JOptionPane.showMessageDialog(null, "Error: "+message);
 		
 	}
 
@@ -85,6 +108,12 @@ public class ClientGameEngine implements IClientEngine{
 		f.setResizable(true);
 		f.setSize(500, 600);
 		f.setVisible(true);
+	}
+	
+	@Override
+	public void shoot(int x, int y) {
+		gameListener.shoot(enemy, x, y);
+		
 	}
 
 }
