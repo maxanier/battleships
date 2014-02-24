@@ -9,8 +9,9 @@ public interface IClientEngine {
 	
 	/**
 	 * Should be called when the connection is established and a nickname should be set
+	 * @param id Playerid
 	 */
-	public void notifyConnected();
+	public void notifyConnected(int id);
 	
 	/**
 	 * A field was shot.

@@ -26,7 +26,8 @@ public class ComClient extends EnhancedClient implements GameListener{
 	@Override
 	public void processEnhancedMessage(String message) {
 		if(message.startsWith(PROTOKOLL.SC_HELLO)){
-			engine.notifyConnected();
+			int id=Integer.parseInt(message.substring(PROTOKOLL.SC_HELLO.length()+1));
+			engine.notifyConnected(id);
 		}
 		else if(message.startsWith(PROTOKOLL.SC_NAME_ACCEPTED)){
 			waitForNameAccepted=false;
