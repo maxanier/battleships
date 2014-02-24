@@ -7,6 +7,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
+import java.util.ArrayList;
 
 import javax.swing.JButton;
 import javax.swing.JPanel;
@@ -64,18 +65,15 @@ class GameField extends JPanel {
 
 					@Override
 					public void mouseClicked(MouseEvent e) {
-						GFButton src = (GFButton) e.getSource();
-						fieldPressed(src.getCoordX(), src.getCoordY());
+						fieldPressed((GFButton) e.getSource());
 					}
 					@Override
 					public void mouseEntered(MouseEvent e) {
-						GFButton src = (GFButton) e.getSource();
-						fieldEntered(src.getCoordX(), src.getCoordY());
+						fieldEntered((GFButton) e.getSource());
 					}
 					@Override
 					public void mouseExited(MouseEvent e) {
-						GFButton src = (GFButton) e.getSource();
-						fieldExited(src.getCoordX(), src.getCoordY());
+						fieldExited((GFButton) e.getSource());
 					}
 					@Override
 					public void mousePressed(MouseEvent e) {}
@@ -121,24 +119,69 @@ class GameField extends JPanel {
 		setButtonColors(a, b, clr);
 	}
 	
-	public void fieldPressed(int x, int y) {
+	public void fieldPressed(GFButton btn) {
 		//TODO Field pressed
 	}
-	public void fieldEntered(int x, int y) {
+	public void fieldEntered(GFButton btn) {
 		//TODO Field entered
-		//If building mode is active
+		//If building mode is active   size of ship: 6-|mode|
 		if(mode!=0) {
-			
+			if(mode<0) {
+				if(getFieldsAround(btn)[0].getBackground() == Color.BLACK || getFieldsAround(btn)[0].getBackground() == Color.BLACK)
+					
+			} else {
+				
+			}
 		}
 		//If playing mode is active
 		else {
 			
 		}
 	}
-	public void fieldExited(int x, int y) {
+	public void fieldExited(GFButton btn) {
 		//TODO Field exited
 	}
 	
+	private GFButton[] getFieldsAround(GFButton btn) {
+		int x = btn.getCoordX();
+		int y = btn.getCoordY();
+		GFButton[] r = new GFButton[4]; //Array to return. Indexes are top, bottom, left, right
+		if(y>0)
+			r[0] = b_fields[x][y-1];
+		if(y<b_fields.length)
+			r[1] = b_fields[x][y+1];
+		if(x>0)
+			r[2] = b_fields[x-1][y];
+		if(x<b_fields.length)
+			r[3] = b_fields[x+1][y];
+		return r;
+	}
+	
+	private boolean fieldsValid(GFButton btn) {
+		boolean valid = true;
+		GFButton[] fields;
+		if(mode<0) {
+			if(btn.getCoordX() - mode >= b_fields.length)
+				return false;
+			fields = new GFButton[mode*(-1)];
+			for(int i=0; i<fields.length;i++) {
+				fields[i] = b_fields[btn.getCoordX() + i][btn.getCoordY()];
+			}
+		} else {	
+			fields = new GFButton[mode];	
+		}
+		
+		for(int i = 0; i<fields.length;i++) {
+			if(getFieldsAround(fields[i])[0].getBackground() == Color.BLACK ||
+					getFieldsAround(fields[i])[1].getBackground() == Color.BLACK ||
+					getFieldsAround(fields[i])[2].getBackground() == Color.BLACK ||
+					getFieldsAround(fields[i])[3].getBackground() == Color.BLACK) {
+				valid = false;
+				break;
+			}
+		}
+		return false;
+	}
 	
 	public String toString() {
 		String s = "" + b_fields.length;
