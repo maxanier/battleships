@@ -78,6 +78,23 @@ public class ServerMap {
 	 */
 	public boolean isValid() {
 		return true;
+		//TODO check if valid
+	}
+	
+	/**
+	 * Returns how many ship fields are in the map
+	 * @return Ship field count
+	 */
+	private int shipFieldCount(){
+		int count=0;
+		for(int[] m:map){
+			for(int f:m){
+				if(f==FieldId.SHIP){
+					count++;
+				}
+			}
+		}
+		return count;
 	}
 
 	/**
