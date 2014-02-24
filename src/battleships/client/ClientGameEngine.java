@@ -3,6 +3,7 @@ package battleships.client;
 import java.util.ArrayList;
 
 import javax.swing.JFrame;
+import javax.swing.JOptionPane;
 
 import battleships.client.com.GameListener;
 import battleships.util.CONSTANTS;
@@ -23,7 +24,17 @@ public class ClientGameEngine implements IClientEngine{
 	}
 	@Override
 	public void notifyConnected() {
-		// TODO Auto-generated method stub
+		String nickname =(String)JOptionPane.showInputDialog(
+                null,
+                "Enter nickname",
+                "Choose nickname",
+                JOptionPane.PLAIN_MESSAGE,
+                null,
+                null,
+                "");
+		if(nickname!=null&&!nickname.equals("")){
+			gameListener.setNickname(nickname);
+		}
 		
 	}
 
@@ -65,7 +76,7 @@ public class ClientGameEngine implements IClientEngine{
 
 	@Override
 	public void notifyError(String message) {
-		// TODO Auto-generated method stub
+		JOptionPane.showMessageDialog(null, "Error: "+message);
 		
 	}
 
