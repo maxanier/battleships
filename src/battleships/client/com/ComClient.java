@@ -106,6 +106,7 @@ public class ComClient extends EnhancedClient implements GameListener{
 			else if(waitForMapAccepted){
 				engine.notifyError("Missing Parameter in setMap command or map invalid");
 				Logger.w(TAG, "Missing Parameter in setMap command or map invalid");
+				engine.mapSet(false);
 			}
 			else if(waitForNameAccepted){
 				engine.notifyError("Missing Parameter in setName command");
