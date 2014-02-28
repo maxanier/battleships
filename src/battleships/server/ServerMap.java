@@ -1,8 +1,11 @@
 package battleships.server;
 
+import battleships.util.CONSTANTS;
 import battleships.util.FieldId;
+import battleships.util.Logger;
 
 public class ServerMap {
+	private final static String TAG="ServerMap";
 	/**
 	 * Creates a new ServerMap from String
 	 * 
@@ -11,35 +14,42 @@ public class ServerMap {
 	 */
 	public static ServerMap createFromString(String s, int x, int y)
 			throws MapInvalidException {
-		if (x < 1 || y < 1) {
-			return null;
-		}
-		if (s == null || s.equals("")) {
-			throw new MapInvalidException("String is empty");
-		}
-		if (x != Integer.parseInt(s.split("\n")[0]) || y != x) {
-			throw new MapInvalidException("Mapsize is invalid");
-		}
-		String[] map = s.split("\n");
-
-		ServerMap serverMap = new ServerMap(x, y, FieldId.WATER);
-
+		ServerMap serverMap;
 		try {
-			for (int i = 0; i < x; i++) {
-				String row = map[i + 1];
-				for (int j = 0; j < y; j++) {
-
-					serverMap.map[i][j] = row.charAt(j);
-				}
+			if (x < 1 || y < 1) {
+				return null;
 			}
-		} catch (IndexOutOfBoundsException e) {
-			e.printStackTrace();
-			throw new MapInvalidException("Map doesn´t fit Mapsize");
-		}
+			if (s == null || s.equals("")) {
+				throw new MapInvalidException("String is empty");
+			}
+			if (x != Integer.parseInt(s.split("\n")[0]) || y != x) {
+				throw new MapInvalidException("Mapsize is invalid");
+			}
+			String[] map = s.split("\n");
 
-		if (!serverMap.isValid()) {
-			throw new MapInvalidException("Ship placement is false");
+			serverMap = new ServerMap(x, y, FieldId.WATER);
+
+			try {
+				for (int i = 0; i < x; i++) {
+					String row = map[i + 1];
+					for (int j = 0; j < y; j++) {
+
+						serverMap.map[i][j] = row.charAt(j);
+					}
+				}
+			} catch (IndexOutOfBoundsException e) {
+				e.printStackTrace();
+				throw new MapInvalidException("Map doesn´t fit Mapsize");
+			}
+
+			if (!serverMap.isValid()) {
+				throw new MapInvalidException("Ship placement is false");
+			}
+		} catch (NumberFormatException e) {
+			Logger.e(TAG, "Map String invalid",e);
+			throw new MapInvalidException("Map String invalid");
 		}
+		
 		return serverMap;
 	}
 
@@ -77,6 +87,10 @@ public class ServerMap {
 	 * @return Valid map
 	 */
 	public boolean isValid() {
+		if(shipFieldCount()!=CONSTANTS.getShipFieldCount()){
+			Logger.w(TAG, "Map is invalid: ShipField count is wrong");
+			return false;
+		}
 		return true;
 		//TODO check if valid
 	}
