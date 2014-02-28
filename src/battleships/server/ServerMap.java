@@ -22,7 +22,7 @@ public class ServerMap {
 			if (s == null || s.equals("")) {
 				throw new MapInvalidException("String is empty");
 			}
-			if (x != Integer.parseInt(s.split("\n")[0]) || y != x) {
+			if (x != Integer.parseInt(s.split(":")[0]) || y != x) {
 				throw new MapInvalidException("Mapsize is invalid");
 			}
 			String[] map = s.split("\n");
