@@ -7,6 +7,7 @@ import javax.swing.JOptionPane;
 
 import battleships.client.com.GameListener;
 import battleships.util.CONSTANTS;
+import battleships.util.Logger;
 import battleships.util.Player;
 
 /**
@@ -22,9 +23,12 @@ public class ClientGameEngine implements IClientEngine, IGUIListener{
 	private ArrayList<Player> players;
 	private int playerId;
 	private Player enemy;
+	private boolean myturn;
+	private final String TAG="CLientGameEngine";
 	
 	public ClientGameEngine(){
 		createGUI(CONSTANTS.GAME_SIZE);
+		myturn=false;
 	}
 	@Override
 	public void notifyConnected(int id) {
@@ -51,6 +55,7 @@ public class ClientGameEngine implements IClientEngine, IGUIListener{
 
 	@Override
 	public void notifyYourTurn() {
+		myturn=true;
 		// TODO Auto-generated method stub
 		
 	}
@@ -112,7 +117,12 @@ public class ClientGameEngine implements IClientEngine, IGUIListener{
 	
 	@Override
 	public void shoot(int x, int y) {
+		if(myturn){
 		gameListener.shoot(enemy, x, y);
+		}
+		else{
+			Logger.w(TAG, "Trying to shoot, but it´s not my turn");
+		}
 		
 	}
 
