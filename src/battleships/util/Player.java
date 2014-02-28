@@ -31,7 +31,7 @@ public class Player {
 	 */
 	public static Player fromString(String s) {
 		try {
-			String ss[]= s.split(",");
+			String ss[]= s.split(";");
 			Player p=new Player();
 			p.nickname=ss[0];
 			p.id=Integer.parseInt(ss[1]);

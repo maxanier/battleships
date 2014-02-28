@@ -107,7 +107,7 @@ public class BattleshipsGameEngine implements IGameEngine {
 				+ " players registered");
 
 		players = new List();
-		int starter = (int) Math.round(Math.random() * p.size());
+		int starter = (int) Math.round(Math.random() * p.size())+1;
 
 		Logger.i(TAG, "Start player: " + starter);
 
