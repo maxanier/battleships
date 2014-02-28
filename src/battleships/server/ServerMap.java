@@ -25,7 +25,7 @@ public class ServerMap {
 			if (x != Integer.parseInt(s.split(":")[0]) || y != x) {
 				throw new MapInvalidException("Mapsize is invalid");
 			}
-			String[] map = s.split("\n");
+			String[] map = s.split(":");
 
 			serverMap = new ServerMap(x, y, FieldId.WATER);
 
@@ -87,11 +87,17 @@ public class ServerMap {
 	 * @return Valid map
 	 */
 	public boolean isValid() {
-		if(shipFieldCount()!=CONSTANTS.getShipFieldCount()){
+		return true;//TODO remove
+		
+		/*
+		 * if(shipFieldCount()!=CONSTANTS.getShipFieldCount()){
+		 
 			Logger.w(TAG, "Map is invalid: ShipField count is wrong");
 			return false;
 		}
+	
 		return true;
+		*/
 		//TODO check if valid
 	}
 	
