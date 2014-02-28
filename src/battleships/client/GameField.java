@@ -22,32 +22,34 @@ import Exceptions.OutOfBoundsException;
  * functions to disable/enable/initialize buttons and so on
  */
 class GameField extends JPanel {
-	
-	//Extends JButton a little by adding coordinates
-		class GFButton extends JButton {
-			private int coordX, coordY;
-			
-			public GFButton(String text, int pX, int pY) {
-				super(text);
-				coordX = pX;
-				coordY = pY;
-			}
-			public int getCoordX() {
-				return coordX;
-			}
-			public int getCoordY() {
-				return coordY;
-			}
+
+	// Extends JButton a little by adding coordinates
+	class GFButton extends JButton {
+		private int coordX, coordY;
+
+		public GFButton(String text, int pX, int pY) {
+			super(text);
+			coordX = pX;
+			coordY = pY;
 		}
-		
+
+		public int getCoordX() {
+			return coordX;
+		}
+
+		public int getCoordY() {
+			return coordY;
+		}
+	}
+
 	private GFButton[][] b_fields;
 	int mode;
-	boolean orientation = true;
+	IGUIListener listener;
 
 	public GameField(int size, int pMode) {
 		super(new GridBagLayout());
 		b_fields = new GFButton[size][size];
-		mode= pMode;
+		mode = pMode;
 	}
 
 	// Initializes all buttons and sets their color to clr
@@ -67,18 +69,24 @@ class GameField extends JPanel {
 					public void mouseClicked(MouseEvent e) {
 						fieldPressed((GFButton) e.getSource());
 					}
+
 					@Override
 					public void mouseEntered(MouseEvent e) {
 						fieldEntered((GFButton) e.getSource());
 					}
+
 					@Override
 					public void mouseExited(MouseEvent e) {
 						fieldExited((GFButton) e.getSource());
 					}
+
 					@Override
-					public void mousePressed(MouseEvent e) {}
+					public void mousePressed(MouseEvent e) {
+					}
+
 					@Override
-					public void mouseReleased(MouseEvent e) {}
+					public void mouseReleased(MouseEvent e) {
+					}
 				});
 				gbc.gridy = j;
 				if (clr != null)
@@ -118,19 +126,20 @@ class GameField extends JPanel {
 		int[] b = { y };
 		setButtonColors(a, b, clr);
 	}
-	
+
 	public void fieldPressed(GFButton btn) {
-		//TODO Field pressed
+		if(btn.getBackground() == Color.GRAY && btn.isEnabled()) {
+			listener.shoot(btn.getCoordX(), btn.getCoordY());
+			enableButtons(false);
+		}
 	}
+
 	public void fieldEntered(GFButton btn) {
 		//TODO Field entered
 		//If building mode is active   size of ship: 6-|mode|
 		if(mode!=0) {
-			if(mode<0) {
-				if(getFieldsAround(btn)[0].getBackground() == Color.BLACK || getFieldsAround(btn)[0].getBackground() == Color.BLACK)
-					
+			if(mode<0) {	
 			} else {
-				
 			}
 		}
 		//If playing mode is active
@@ -138,61 +147,72 @@ class GameField extends JPanel {
 			
 		}
 	}
+
 	public void fieldExited(GFButton btn) {
-		//TODO Field exited
+		// TODO Field exited
 	}
-	
+
 	private GFButton[] getFieldsAround(GFButton btn) {
 		int x = btn.getCoordX();
 		int y = btn.getCoordY();
-		GFButton[] r = new GFButton[4]; //Array to return. Indexes are top, bottom, left, right
-		if(y>0)
-			r[0] = b_fields[x][y-1];
-		if(y<b_fields.length)
-			r[1] = b_fields[x][y+1];
-		if(x>0)
-			r[2] = b_fields[x-1][y];
-		if(x<b_fields.length)
-			r[3] = b_fields[x+1][y];
+		GFButton[] r = new GFButton[4]; // Array to return. Indexes are top,
+										// bottom, left, right
+		if (y > 0)
+			r[0] = b_fields[x][y - 1];
+		if (y < b_fields.length - 1)
+			r[1] = b_fields[x][y + 1];
+		if (x > 0)
+			r[2] = b_fields[x - 1][y];
+		if (x < b_fields.length - 1)
+			r[3] = b_fields[x + 1][y];
 		return r;
 	}
-	
-	private boolean fieldsValid(GFButton btn) {
-		boolean valid = true;
+
+	private GFButton[] getSelectedFields(GFButton btn) {
 		GFButton[] fields;
-		if(mode<0) {
-			if(btn.getCoordX() - mode >= b_fields.length)
-				return false;
-			fields = new GFButton[mode*(-1)];
-			for(int i=0; i<fields.length;i++) {
-				fields[i] = b_fields[btn.getCoordX() + i][btn.getCoordY()];
+		if (mode < 0) {
+			fields = new GFButton[6 + mode];
+			for (int i = 0; i < fields.length; i++) {
+				if (btn.getCoordX() + i < b_fields.length)
+					fields[i] = b_fields[btn.getCoordX() + i][btn.getCoordY()];
+				else
+					fields[i] = null;
 			}
-		} else {	
-			fields = new GFButton[mode];	
-		}
-		
-		for(int i = 0; i<fields.length;i++) {
-			if(getFieldsAround(fields[i])[0].getBackground() == Color.BLACK ||
-					getFieldsAround(fields[i])[1].getBackground() == Color.BLACK ||
-					getFieldsAround(fields[i])[2].getBackground() == Color.BLACK ||
-					getFieldsAround(fields[i])[3].getBackground() == Color.BLACK) {
-				valid = false;
-				break;
+		} else {
+			fields = new GFButton[6-mode];
+			for (int i = 0; i < fields.length; i++) {
+				if (btn.getCoordY() + i < b_fields.length)
+					fields[i] = b_fields[btn.getCoordX()][btn.getCoordY() + i];
+				else
+					fields[i] = null;
 			}
 		}
-		return false;
+		return null;
 	}
-	
+
+	public boolean fieldsValid(GFButton[] btns) {
+		for (int i = 0; i < btns.length; i++) {
+			GFButton[] tmp = getFieldsAround(btns[i]);
+			if (tmp[0] == null || tmp[0].getBackground() == Color.BLACK
+					|| tmp[1] == null || tmp[1].getBackground() == Color.BLACK
+					|| tmp[2] == null || tmp[2].getBackground() == Color.BLACK
+					|| tmp[3] == null || tmp[3].getBackground() == Color.BLACK) {
+				return false;
+			}
+		}
+		return true;
+	}
+
 	public String toString() {
 		String s = "" + b_fields.length;
-		for(int i = 0; i<b_fields.length; i++) {
+		for (int i = 0; i < b_fields.length; i++) {
 			s = s + "\n";
-			for(int j = 0; j<b_fields.length;i++) {
-				if(b_fields[i][j].getBackground() == Color.BLUE)
+			for (int j = 0; j < b_fields.length; i++) {
+				if (b_fields[i][j].getBackground() == Color.BLUE)
 					s = s + FieldId.WATER;
-				else if(b_fields[i][j].getBackground() == Color.BLACK)
+				else if (b_fields[i][j].getBackground() == Color.BLACK)
 					s = s + FieldId.SHIP;
-				else if(b_fields[i][j].getBackground() == Color.RED)
+				else if (b_fields[i][j].getBackground() == Color.RED)
 					s = s + FieldId.SUNKEN_SHIP;
 				else
 					s = s + FieldId.UNKNOWN;
@@ -200,11 +220,15 @@ class GameField extends JPanel {
 		}
 		return s;
 	}
-	
+
 	public void setMode(int pMode) {
 		mode = pMode;
 	}
+
 	public int getMode() {
 		return mode;
+	}
+	public void addListener(IGUIListener l) {
+		listener = l;
 	}
 }

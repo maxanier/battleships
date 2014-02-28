@@ -24,16 +24,21 @@ public class ClientGUI extends JPanel {
 	public ClientGUI(int size) {
 		amountLarge = size / 10;
 		amountSmall = size / 5;
-		GameFieldBuilderGUI builderGUI = new GameFieldBuilderGUI(size);
-		enemyGF = new GameField(size);
+		//GameFieldBuilderGUI builderGUI = new GameFieldBuilderGUI(size);
+		enemyGF = new GameField(size, 0);
 		enemyGF.initButtons(Color.GRAY);
-		enemyGF.enableButtons(false);
+		enemyGF.enableButtons(true);
 		
-		ownGF = new GameField(size);
+		ownGF = new GameField(size, 0);
 		ownGF.initButtons(Color.GRAY);
 		ownGF.enableButtons(false);
 
 		add(enemyGF);
 		add(ownGF);
+	}
+	
+	public void acceptMyTurn(IGUIListener listener) {
+		enemyGF.addListener(listener);
+		enemyGF.enableButtons(true);
 	}
 }
