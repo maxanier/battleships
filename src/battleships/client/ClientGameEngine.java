@@ -62,7 +62,8 @@ public class ClientGameEngine implements IClientEngine, IGUIListener{
 
 	@Override
 	public void notifyCreateMap() {
-		// TODO Auto-generated method stub
+		
+		gameListener.sendMap(CONSTANTS.getTestMap());
 		
 	}
 
