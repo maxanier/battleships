@@ -17,4 +17,15 @@ public class CONSTANTS {
 		
 		return shipAmounts;
 	}
+	
+	public static int getShipFieldCount(){
+		int[] ships = getShipAmount();
+		int count=0;
+		count+=ships[0]*5;
+		count+=ships[1]*4;
+		count+=ships[2]*3;
+		count+=ships[3]*2;
+		count+=ships[4]*1;
+		return count;
+	}
 }
