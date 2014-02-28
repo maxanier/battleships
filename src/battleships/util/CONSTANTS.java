@@ -28,4 +28,8 @@ public class CONSTANTS {
 		count+=ships[4]*1;
 		return count;
 	}
+	
+	public static String getTestMap(){
+		return("10\n000000000011111000001111000000111000000011000000001100000000100000000010000000000000000000000000000");
+	}
 }
