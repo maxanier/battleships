@@ -9,12 +9,17 @@ import java.awt.event.ActionListener;
 import javax.swing.JButton;
 import javax.swing.JDialog;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
+
+import battleships.util.FieldId;
+import battleships.util.Logger;
 
 import Exceptions.OutOfBoundsException;
 
 public class ClientGUI extends JPanel {	
 
+	private static final String TAG = "ClientGUI";
 	/*
 	 * Start of ClientGUI class, the main class of the GUI
 	 */
@@ -40,5 +45,24 @@ public class ClientGUI extends JPanel {
 	public void acceptMyTurn(IGUIListener listener) {
 		enemyGF.addListener(listener);
 		enemyGF.enableButtons(true);
+	}
+	
+	public void showShotResult(boolean mine, int x, int y, int newId, boolean sunk) {
+		if(mine) {
+			try {
+				ownGF.setButtonColor(x, y, FieldId.getColor(newId));
+			} catch (OutOfBoundsException e) {
+				Logger.e(TAG, "The coordinates for the shot are out of bounds. Bad aim!", e);
+			}
+		}
+		else {
+			try {
+				enemyGF.setButtonColor(x, y, FieldId.getColor(newId));
+			} catch (OutOfBoundsException e) {
+				Logger.e(TAG, "The coordinates for the shot are out of bounds. Bad aim!", e);
+			}
+		}
+		if(sunk)
+			JOptionPane.showMessageDialog(this, "Ship sunken");
 	}
 }
