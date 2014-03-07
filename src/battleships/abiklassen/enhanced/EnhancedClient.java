@@ -6,6 +6,8 @@ import battleships.util.Logger;
 public abstract class EnhancedClient extends Client {
 
 	private final String TAG="Client";
+	protected boolean ready=false;
+	
 	public EnhancedClient(String pIPAdresse, int pPortNr) {
 		super(pIPAdresse, pPortNr);
 		Logger.init();
@@ -23,6 +25,12 @@ public abstract class EnhancedClient extends Client {
 	@Override
 	public final void processMessage(String message) {
 		Logger.i(TAG, "Received new message: \""+message+"\"");
+		while(!ready){
+			try {
+				Thread.sleep(10);
+			} catch (InterruptedException e) {
+			}
+		}
 		processEnhancedMessage(message);
 	}
 	

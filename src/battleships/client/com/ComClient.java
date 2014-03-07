@@ -15,17 +15,20 @@ public class ComClient extends EnhancedClient implements GameListener{
 	private boolean waitForMapAccepted=false;
 	private boolean waitForShotAccepted=false;
 	private final String TAG="ComClient";
+
 	
 	
 	public  ComClient(String pIPAdresse, int pPortNr) {
 		super(pIPAdresse, pPortNr);
 		this.engine=new ClientGameEngine();
 		engine.setGameListener(this);
+		ready=true;
 		
 	}
 
 	@Override
 	public synchronized void  processEnhancedMessage(String message) {
+
 		Logger.i(TAG, engine.toString());
 		if(message.startsWith(PROTOKOLL.SC_HELLO)){
 			int id=Integer.parseInt(message.substring(PROTOKOLL.SC_HELLO.length()+1));

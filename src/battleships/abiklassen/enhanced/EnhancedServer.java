@@ -13,6 +13,7 @@ import battleships.util.Logger;
 public abstract class EnhancedServer extends Server {
 
 	private final String TAG="Server";
+	
 	public EnhancedServer(int pPortNr) {
 		super(pPortNr);
 		Logger.init();

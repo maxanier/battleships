@@ -167,6 +167,7 @@ public class ServerMap {
 	public boolean shipsLeft() {
 		for (int a[] : map) {
 			for (int b : a) {
+				Logger.i(TAG,"Überprüfe Feld: "+b);
 				if (b == FieldId.SHIP) {
 					return true;
 				}
