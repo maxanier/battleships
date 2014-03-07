@@ -49,7 +49,7 @@ public class ClientGameEngine implements IClientEngine, IGUIListener{
 
 	@Override
 	public void shotResult(int victimId, int x, int y, int newId, boolean sunk) {
-		// TODO Auto-generated method stub
+		gui.showShotResult(enemy.getId()!=victimId, x, y, newId, sunk);
 		
 	}
 
