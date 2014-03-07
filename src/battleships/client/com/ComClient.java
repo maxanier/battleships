@@ -15,6 +15,7 @@ public class ComClient extends EnhancedClient implements GameListener{
 	private boolean waitForMapAccepted=false;
 	private boolean waitForShotAccepted=false;
 	private final String TAG="ComClient";
+	private int clientId;
 
 	
 	
@@ -30,7 +31,8 @@ public class ComClient extends EnhancedClient implements GameListener{
 	public synchronized void  processEnhancedMessage(String message) {
 		if(message.startsWith(PROTOKOLL.SC_HELLO)){
 			int id=Integer.parseInt(message.substring(PROTOKOLL.SC_HELLO.length()+1));
-			engine.notifyConnected(id);
+			clientId=id;
+			engine.notifyConnected();
 		}
 		else if(message.startsWith(PROTOKOLL.SC_NAME_ACCEPTED)){
 			waitForNameAccepted=false;
@@ -67,11 +69,13 @@ public class ComClient extends EnhancedClient implements GameListener{
 		else if(message.startsWith(PROTOKOLL.SC_END)){
 			try {
 				int winner=Integer.parseInt(message.substring(PROTOKOLL.SC_END.length()+1));
-				engine.notifyEnd(winner);
+				engine.notifyEnd(getPlayerFromId(winner));
 			} catch (NumberFormatException e) {
 				
-				e.printStackTrace();
+				Logger.e(TAG, "Failed processing end message",e);
 				this.send(PROTOKOLL.MISSING_PARAMETER);
+			} catch (PlayerNotFoundException e) {
+				Logger.e(TAG, "Failed processing end message",e);
 			}
 		}
 		else if(message.startsWith(PROTOKOLL.SC_SHOT_RESULT)){
@@ -82,11 +86,13 @@ public class ComClient extends EnhancedClient implements GameListener{
 				int y=Integer.parseInt(params[3]);
 				int newId=Integer.parseInt(params[4]);
 				int sunk=Integer.parseInt(params[5]);
-				engine.shotResult(playerId, x, y, newId, sunk==1);
+				engine.shotResult(getPlayerFromId(playerId), x, y, newId, sunk==1);
 			} catch (NumberFormatException e) {
 				
-				e.printStackTrace();
+				Logger.e(TAG, "Failed processing shot-result",e);
 				this.send(PROTOKOLL.MISSING_PARAMETER);
+			} catch (PlayerNotFoundException e) {
+				Logger.e(TAG, "Failed processing shot-result",e);
 			}
 		}
 		else if(message.startsWith(PROTOKOLL.SC_START)){
@@ -98,7 +104,12 @@ public class ComClient extends EnhancedClient implements GameListener{
 				engine.notifyError("Playerlist from Server contains less than two players");
 			}
 			else{
-				engine.startGame(players);
+				for(Player p : players){
+					if(p.getId()==clientId){
+						engine.startGame(players,p);
+					}
+				}
+				
 			}
 		}
 		else if(message.startsWith(PROTOKOLL.MISSING_PARAMETER)){
@@ -140,6 +151,22 @@ public class ComClient extends EnhancedClient implements GameListener{
 	public void shoot(Player victim, int x, int y) {
 		this.send(PROTOKOLL.CS_SHOOT+" "+victim.getId()+" "+x+" "+y);
 		waitForShotAccepted=true;
+	}
+	
+	private Player getPlayerFromId(int id) throws PlayerNotFoundException{
+		for(Player p : engine.getPlayers()){
+			if(p.getId()==id){
+				return p;
+			}
+		}
+		throw new PlayerNotFoundException( "Player with id: "+id+" not found");
+		
+	}
+	
+	private class PlayerNotFoundException extends Exception{
+		public PlayerNotFoundException(String msg){
+			super(msg);
+		}
 	}
 
 }
