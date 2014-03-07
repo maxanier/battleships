@@ -206,7 +206,7 @@ class GameField extends JPanel {
 	public String toString() {
 		String s = "" + b_fields.length;
 		for (int i = 0; i < b_fields.length; i++) {
-			s = s + "\n";
+			s = s + ":";
 			for (int j = 0; j < b_fields.length; i++) {
 				if (b_fields[i][j].getBackground() == Color.BLUE)
 					s = s + FieldId.WATER;
