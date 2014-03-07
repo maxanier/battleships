@@ -19,10 +19,9 @@ public class ClientGameEngine implements IClientEngine, IGUIListener{
 
 	private ClientGUI gui;
 	private GameListener gameListener;
-	private boolean playing;
 	private ArrayList<Player> players;
-	private int playerId;
-	private Player enemy;
+	private Player myPlayer;
+	private Player enemy;//only needed as long as two player game
 	private boolean myturn;
 	private final String TAG="CLientGameEngine";
 	
@@ -31,8 +30,8 @@ public class ClientGameEngine implements IClientEngine, IGUIListener{
 		myturn=false;
 	}
 	@Override
-	public void notifyConnected(int id) {
-		playerId=id;
+	public void notifyConnected() {
+		
 		String nickname =(String)JOptionPane.showInputDialog(
                 null,
                 "Enter nickname",
@@ -48,8 +47,8 @@ public class ClientGameEngine implements IClientEngine, IGUIListener{
 	}
 
 	@Override
-	public void shotResult(int victimId, int x, int y, int newId, boolean sunk) {
-		gui.showShotResult(enemy.getId()!=victimId, x, y, newId, sunk);
+	public void shotResult(Player victim, int x, int y, int newId, boolean sunk) {
+		gui.showShotResult(victim.equals(myPlayer), x, y, newId, sunk);
 		
 	}
 
@@ -68,10 +67,12 @@ public class ClientGameEngine implements IClientEngine, IGUIListener{
 	}
 
 	@Override
-	public void startGame(ArrayList<Player> players) {
+	public void startGame(ArrayList<Player> players, Player me) {
 		this.players=players;
-		for(Player p:players){
-			if(p.getId()!=playerId){
+		this.myPlayer=me;
+		
+		for(Player p : players){
+			if(!p.equals(me)){
 				enemy=p;
 			}
 		}
@@ -99,7 +100,7 @@ public class ClientGameEngine implements IClientEngine, IGUIListener{
 	}
 
 	@Override
-	public void notifyEnd(int winnerId) {
+	public void notifyEnd(Player winner) {
 		// TODO Auto-generated method stub
 		
 	}
@@ -125,6 +126,10 @@ public class ClientGameEngine implements IClientEngine, IGUIListener{
 			Logger.w(TAG, "Trying to shoot, but it´s not my turn");
 		}
 		
+	}
+	
+	public ArrayList<Player> getPlayers(){
+		return players;
 	}
 
 }

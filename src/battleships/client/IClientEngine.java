@@ -9,9 +9,9 @@ public interface IClientEngine {
 	
 	/**
 	 * Should be called when the connection is established and a nickname should be set
-	 * @param id Playerid
+	 * 
 	 */
-	public void notifyConnected(int id);
+	public void notifyConnected();
 	
 	/**
 	 * A field was shot.
@@ -21,7 +21,7 @@ public interface IClientEngine {
 	 * @param newId New FieldId
 	 * @param sunk whether a ship was completly destroyed or not
 	 */
-	public void shotResult(int victimId,int x,int y,int newId, boolean sunk);
+	public void shotResult(Player victim,int x,int y,int newId, boolean sunk);
 	
 	/**
 	 * Should be called if its the clients turn.
@@ -36,8 +36,9 @@ public interface IClientEngine {
 	/**
 	 * Should be called when the game starts
 	 * @param players ArrayList of all participating players
+	 * @param Client´s player player
 	 */
-	public void startGame(ArrayList<Player> players);
+	public void startGame(ArrayList<Player> players, Player me);
 	
 	public void setGameListener(GameListener l);
 	
@@ -59,7 +60,12 @@ public interface IClientEngine {
 	 * Should be called if the game ends
 	 * @param winnerId Id of winning player
 	 */
-	public void notifyEnd(int winnerId);
+	public void notifyEnd(Player winner);
 	
+	/**
+	 * Should return the playerlist
+	 * @return Players
+	 */
+	public ArrayList<Player> getPlayers();
 	
 }
