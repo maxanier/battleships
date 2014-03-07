@@ -27,7 +27,7 @@ public class ClientGUI extends JPanel {
 		//GameFieldBuilderGUI builderGUI = new GameFieldBuilderGUI(size);
 		enemyGF = new GameField(size, 0);
 		enemyGF.initButtons(Color.GRAY);
-		enemyGF.enableButtons(true);
+		enemyGF.enableButtons(false);
 		
 		ownGF = new GameField(size, 0);
 		ownGF.initButtons(Color.GRAY);
