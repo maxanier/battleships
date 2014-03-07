@@ -56,7 +56,7 @@ public class ClientGameEngine implements IClientEngine, IGUIListener{
 	@Override
 	public void notifyYourTurn() {
 		myturn=true;
-		// TODO Auto-generated method stub
+		gui.acceptMyTurn(this);
 		
 	}
 

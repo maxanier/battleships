@@ -3,6 +3,7 @@ package battleships.client.com;
 import java.util.ArrayList;
 
 import battleships.abiklassen.enhanced.EnhancedClient;
+import battleships.client.ClientGameEngine;
 import battleships.client.IClientEngine;
 import battleships.util.Logger;
 import battleships.util.PROTOKOLL;
@@ -16,9 +17,9 @@ public class ComClient extends EnhancedClient implements GameListener{
 	private final String TAG="ComClient";
 	
 	
-	public ComClient(String pIPAdresse, int pPortNr, IClientEngine engine) {
+	public  ComClient(String pIPAdresse, int pPortNr) {
 		super(pIPAdresse, pPortNr);
-		this.engine=engine;
+		this.engine=new ClientGameEngine();
 		engine.setGameListener(this);
 		
 	}

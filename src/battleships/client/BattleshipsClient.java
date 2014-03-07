@@ -21,7 +21,6 @@ import battleships.util.Player;
 public class BattleshipsClient {
 
 	private ComClient comClient;
-	private ClientGameEngine engine;
 	
 	public BattleshipsClient(){
 		
@@ -37,8 +36,8 @@ public class BattleshipsClient {
 		                    "");
 		}while(ip==null||ip.equals(""));
 		
-		engine=new ClientGameEngine();
-		comClient=new ComClient(ip,CONSTANTS.PORT,engine);
+		
+		comClient=new ComClient(ip,CONSTANTS.PORT);
 	}
 	
 	
