@@ -171,7 +171,7 @@ public class ComServer extends EnhancedServer implements GameListener {
 			return;
 		}
 		if (players.getSize() < engine.getMaxPlayer()) {
-			int id = ip.hashCode() / 100 + port;
+			int id = Math.abs(ip.hashCode() / 100 + port);
 			players.addPlayer(ip, port, new Player("", id));
 			this.send(ip, port, PROTOKOLL.SC_HELLO+" "+id);
 			Logger.i(TAG, "Added new player (" + ip + ":" + port + ") ID: "
