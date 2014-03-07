@@ -12,7 +12,7 @@ import battleships.util.Logger;
  */
 public abstract class EnhancedServer extends Server {
 
-	private final String TAG="Server";
+	private final String TAG="ComServer";
 	
 	public EnhancedServer(int pPortNr) {
 		super(pPortNr);
