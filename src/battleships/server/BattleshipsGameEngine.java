@@ -4,6 +4,7 @@ import java.util.ArrayList;
 
 import battleships.abiklassen.List;
 import battleships.server.com.GameListener;
+import battleships.util.FieldId;
 import battleships.util.Logger;
 import battleships.util.Player;
 
@@ -77,7 +78,7 @@ public class BattleshipsGameEngine implements IGameEngine {
 			map.shoot(x, y);
 
 			gameListener.notifyShotResult(victim, x, y, map.getFieldId(x, y),
-					!map.shipNearby(x, y));
+					(map.getFieldId(x, y)==FieldId.SUNKEN_SHIP&&!map.shipNearby(x, y)));
 		} catch (IndexOutOfBoundsException e) {
 			Logger.e(TAG, "Map index out of bound", e);
 		}

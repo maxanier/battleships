@@ -28,8 +28,6 @@ public class ComClient extends EnhancedClient implements GameListener{
 
 	@Override
 	public synchronized void  processEnhancedMessage(String message) {
-
-		Logger.i(TAG, engine.toString());
 		if(message.startsWith(PROTOKOLL.SC_HELLO)){
 			int id=Integer.parseInt(message.substring(PROTOKOLL.SC_HELLO.length()+1));
 			engine.notifyConnected(id);
