@@ -13,6 +13,7 @@ import javax.swing.JButton;
 import javax.swing.JPanel;
 
 import battleships.util.FieldId;
+import battleships.util.Logger;
 
 import Exceptions.OutOfBoundsException;
 
@@ -41,6 +42,8 @@ class GameField extends JPanel {
 			return coordY;
 		}
 	}
+
+	protected static final String TAG = "GameField";
 
 	private GFButton[][] b_fields;
 	int mode;
@@ -128,28 +131,67 @@ class GameField extends JPanel {
 	}
 
 	public void fieldPressed(GFButton btn) {
-		if(btn.getBackground() == Color.GRAY && btn.isEnabled()) {
-			listener.shoot(btn.getCoordX(), btn.getCoordY());
-			enableButtons(false);
+		//If playing mode is active
+		if (mode == 0) {
+			if (btn.getBackground() == Color.GRAY && btn.isEnabled()) {
+				listener.shoot(btn.getCoordX(), btn.getCoordY());
+				enableButtons(false);
+			}
+		} else { //If building mode is active
+			if(btn != null && btn.getBackground() != Color.RED) {
+				GFButton[] btns = getSelectedFields(btn);
+				for(int i=0;i<btns.length;i++) {
+					btns[i].setBackground(Color.BLACK);
+				}
+			}
 		}
 	}
 
 	public void fieldEntered(GFButton btn) {
-		//TODO Field entered
-		//If building mode is active   size of ship: 6-|mode|
-		if(mode!=0) {
-			if(mode<0) {	
+		// TODO Field entered
+		// If building mode is active size of ship: 6-Math.abs(mode)
+		if (mode != 0) {
+			if (mode < 0) {
+				GFButton btns[] = getSelectedFields(btn);
+				boolean allValid = true;
+				for (int i = 0; i < btns.length; i++)
+					if (btns[i] == null
+							|| btns[i].getBackground() == Color.BLACK)
+						allValid = false;
+				if (allValid) {
+					for (int i = 0; i < btns.length; i++)
+						btns[i].setBackground(Color.LIGHT_GRAY);
+				} else {
+					for (int i = 0; i < btns.length; i++) {
+						if (btns[i] != null
+								&& btns[i].getBackground() != Color.BLACK)
+							btns[i].setBackground(Color.RED);
+					}
+				}
 			} else {
 			}
 		}
-		//If playing mode is active
+		// If playing mode is active
 		else {
-			
+
 		}
 	}
 
 	public void fieldExited(GFButton btn) {
 		// TODO Field exited
+		// If building mode is active size of ship: 6-Math.abs(mode)
+		if (mode != 0) {
+			if (mode < 0) {
+				GFButton[] btns = getSelectedFields(btn);
+				for (int i = 0; i < btns.length; i++) {
+					if (btns[i] != null
+							&& (btns[i].getBackground() == Color.LIGHT_GRAY || btns[i]
+									.getBackground() == Color.RED)) {
+						btns[i].setBackground(Color.BLUE);
+					}
+				}
+			}
+		}
 	}
 
 	private GFButton[] getFieldsAround(GFButton btn) {
@@ -178,14 +220,16 @@ class GameField extends JPanel {
 				else
 					fields[i] = null;
 			}
-		} else {
-			fields = new GFButton[6-mode];
+			return fields;
+		} else if (mode > 0) {
+			fields = new GFButton[6 - mode];
 			for (int i = 0; i < fields.length; i++) {
 				if (btn.getCoordY() + i < b_fields.length)
 					fields[i] = b_fields[btn.getCoordX()][btn.getCoordY() + i];
 				else
 					fields[i] = null;
 			}
+			return fields;
 		}
 		return null;
 	}
@@ -228,6 +272,7 @@ class GameField extends JPanel {
 	public int getMode() {
 		return mode;
 	}
+
 	public void addListener(IGUIListener l) {
 		listener = l;
 	}

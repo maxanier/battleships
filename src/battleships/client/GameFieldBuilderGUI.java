@@ -16,6 +16,7 @@ public class GameFieldBuilderGUI extends JPanel{
 	private JButton b_done;
 	private JButton[] b_ships;
 	private int[] shipAmounts;
+	public boolean done;
 	
 
 	public GameFieldBuilderGUI(int size) {
@@ -39,7 +40,6 @@ public class GameFieldBuilderGUI extends JPanel{
 		for(int i=0; i<5;i++)
 			b_ships[i].addActionListener(new ActionListener() {
 				public void actionPerformed(ActionEvent e) {
-					//TODO Button clicked
 					for(int i=0; i<5; i++)
 						if((JButton) e.getSource() == b_ships[i]) {
 							if(i == field.getMode()-1 || i == field.getMode()*(-1)-1)
@@ -54,6 +54,7 @@ public class GameFieldBuilderGUI extends JPanel{
 		b_done.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				//TODO Done button
+				done = true;
 			}
 		});
 		
@@ -62,6 +63,7 @@ public class GameFieldBuilderGUI extends JPanel{
 		for(int i=0;i<b_ships.length;i++) 
 			add(b_ships[i]);
 		d.setVisible(true);
+		d.add(this);
 	}
 }
 

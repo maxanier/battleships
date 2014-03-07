@@ -29,7 +29,12 @@ public class ClientGUI extends JPanel {
 	public ClientGUI(int size) {
 		amountLarge = size / 10;
 		amountSmall = size / 5;
-		//GameFieldBuilderGUI builderGUI = new GameFieldBuilderGUI(size);
+		GameFieldBuilderGUI builderGUI = new GameFieldBuilderGUI(size);
+		while(!builderGUI.done) {
+			try {
+				Thread.sleep(10);
+			} catch (InterruptedException e) {}
+		}
 		enemyGF = new GameField(size, 0);
 		enemyGF.initButtons(Color.GRAY);
 		enemyGF.enableButtons(false);
