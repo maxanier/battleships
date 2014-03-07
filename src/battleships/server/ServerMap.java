@@ -19,12 +19,15 @@ public class ServerMap {
 			if (x < 1 || y < 1) {
 				return null;
 			}
+			
 			if (s == null || s.equals("")) {
 				throw new MapInvalidException("String is empty");
 			}
 			if (x != Integer.parseInt(s.split(":")[0]) || y != x) {
 				throw new MapInvalidException("Mapsize is invalid");
 			}
+			
+			
 			String[] map = s.split(":");
 
 			serverMap = new ServerMap(x, y, FieldId.WATER);
@@ -34,7 +37,7 @@ public class ServerMap {
 					String row = map[i + 1];
 					for (int j = 0; j < y; j++) {
 
-						serverMap.map[i][j] = row.charAt(j);
+						serverMap.map[i][j] = row.charAt(j)-48;//-48 to convert it to the right int
 					}
 				}
 			} catch (IndexOutOfBoundsException e) {
@@ -167,7 +170,7 @@ public class ServerMap {
 	public boolean shipsLeft() {
 		for (int a[] : map) {
 			for (int b : a) {
-				Logger.i(TAG,"Überprüfe Feld: "+b);
+				
 				if (b == FieldId.SHIP) {
 					return true;
 				}
