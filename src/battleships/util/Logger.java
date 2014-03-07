@@ -31,7 +31,7 @@ public class Logger {
 	 * @param t Exception
 	 */
 	public static void e(String tag, String msg, Throwable t) {
-		log("[ERROR] [" + tag + "]: " + msg + "\nERROR-MESSAGE: " + t.getMessage());
+		log("[ERROR] [" + tag + "]: " + msg + "\nERROR: "+t.getStackTrace());
 	}
 
 	/**
