@@ -8,6 +8,7 @@ import java.awt.event.ActionListener;
 
 import javax.swing.JButton;
 import javax.swing.JDialog;
+import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
@@ -26,11 +27,13 @@ public class ClientGUI extends JPanel {
 	 */
 	private GameField ownGF, enemyGF;
 	private int amountLarge, amountSmall;
+	private JFrame frame;
 
-	public ClientGUI(int pSize) {
+	public ClientGUI(int pSize, JFrame pFrame) {
 		amountLarge = size / 10;
 		amountSmall = size / 5;
 		size = pSize;
+		frame = pFrame;
 	}
 	
 	//Initializes the GUI, ownGF is needed first
@@ -44,6 +47,9 @@ public class ClientGUI extends JPanel {
 		
 		add(enemyGF);
 		add(ownGF);
+		
+		frame.setVisible(true);
+		frame.repaint();
 	}
 	
 	public void acceptMyTurn(IGUIListener listener) {
