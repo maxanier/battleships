@@ -129,6 +129,7 @@ public class ClientGameEngine implements IClientEngine, IGUIListener {
 
 	@Override
 	public void mapCreated(String map) {
+		gui.init();
 		gameListener.sendMap(map);
 		
 	}
