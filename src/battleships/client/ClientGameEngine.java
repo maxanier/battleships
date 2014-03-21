@@ -56,14 +56,20 @@ public class ClientGameEngine implements IClientEngine, IGUIListener {
 
 	@Override
 	public void notifyCreateMap() {
-
-		gameListener.sendMap(CONSTANTS.getTestMap());
+		
+		String mapString=gui.getMap();
+		if(mapString==null){
+			System.err.println("Map is not set yet");
+		}
+		else{
+			gameListener.sendMap(mapString);
+		}
 
 	}
 
 	@Override
 	public void notifyEnd(Player winner) {
-		// TODO Auto-generated method stub
+		JOptionPane.showMessageDialog(null, "Player "+winner.getNickname()+" won");
 
 	}
 
@@ -124,10 +130,12 @@ public class ClientGameEngine implements IClientEngine, IGUIListener {
 		f.setResizable(true);
 		f.setSize(500, 600);
 		f.setVisible(true);
+		
 	}
 
 	private void gameFieldGUIBuilder() {
 
 	}
+
 
 }
