@@ -57,13 +57,7 @@ public class ClientGameEngine implements IClientEngine, IGUIListener {
 	@Override
 	public void notifyCreateMap() {
 		
-		String mapString=gui.getMap();
-		if(mapString==null){
-			System.err.println("Map is not set yet");
-		}
-		else{
-			gameListener.sendMap(mapString);
-		}
+		gui.createMap(this);
 
 	}
 
@@ -133,9 +127,13 @@ public class ClientGameEngine implements IClientEngine, IGUIListener {
 		
 	}
 
-	private void gameFieldGUIBuilder() {
-
+	@Override
+	public void mapCreated(String map) {
+		gameListener.sendMap(map);
+		
 	}
+
+
 
 
 }
