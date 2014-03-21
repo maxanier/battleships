@@ -22,6 +22,7 @@ public class ComClient extends EnhancedClient implements GameListener {
 		this.engine = new ClientGameEngine();
 		engine.setGameListener(this);
 		ready = true;
+		
 
 	}
 
@@ -60,6 +61,7 @@ public class ComClient extends EnhancedClient implements GameListener {
 				int winner = Integer.parseInt(message
 						.substring(PROTOKOLL.SC_END.length() + 1));
 				engine.notifyEnd(getPlayerFromId(winner));
+				this.close();//Close the thread
 			} catch (NumberFormatException e) {
 
 				Logger.e(TAG, "Failed processing end message", e);
@@ -133,6 +135,7 @@ public class ComClient extends EnhancedClient implements GameListener {
 	public void setNickname(String n) {
 		this.send(PROTOKOLL.CS_REGISTER + " " + n);
 		waitForNameAccepted = true;
+		
 	}
 
 	@Override
@@ -149,7 +152,7 @@ public class ComClient extends EnhancedClient implements GameListener {
 		}
 		throw new PlayerNotFoundException("Player with id: " + id
 				+ " not found");
-
+		
 	}
 
 	private class PlayerNotFoundException extends Exception {

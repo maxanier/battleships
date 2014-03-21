@@ -25,6 +25,7 @@ public class ClientGameEngine implements IClientEngine, IGUIListener {
 	private Player enemy;// only needed as long as two player game
 	private boolean myturn;
 	private final String TAG = "CLientGameEngine";
+	private JFrame frame;
 
 	public ClientGameEngine() {
 		createGUI(CONSTANTS.GAME_SIZE);
@@ -64,6 +65,8 @@ public class ClientGameEngine implements IClientEngine, IGUIListener {
 	@Override
 	public void notifyEnd(Player winner) {
 		JOptionPane.showMessageDialog(null, "Player "+winner.getNickname()+" won");
+		frame.dispose();
+		
 
 	}
 
@@ -119,11 +122,15 @@ public class ClientGameEngine implements IClientEngine, IGUIListener {
 
 	private void createGUI(int size) {
 		gui = new ClientGUI(size);
-		JFrame f = new JFrame("Battleships Client");
-		f.add(gui);
-		f.setResizable(true);
-		f.setSize(500, 600);
-		f.setVisible(true);
+		frame = new JFrame("Battleships Client");
+		frame.add(gui);
+		frame.setResizable(true);
+		frame.setSize(500, 600);
+		frame.setVisible(true);
+		
+		
+		
+		
 		
 	}
 
