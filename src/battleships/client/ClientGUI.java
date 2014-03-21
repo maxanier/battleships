@@ -32,16 +32,17 @@ public class ClientGUI extends JPanel {
 		GameFieldBuilderGUI builderGUI = new GameFieldBuilderGUI(size);
 		while(!builderGUI.done) {
 			try {
-				Thread.sleep(10);
+				Thread.sleep(100);
 			} catch (InterruptedException e) {}
 		}
+		ownGF = builderGUI.getField();
+		ownGF.enableButtons(false);
+		
+		
 		enemyGF = new GameField(size, 0);
 		enemyGF.initButtons(Color.GRAY);
 		enemyGF.enableButtons(false);
 		
-		ownGF = new GameField(size, 0);
-		ownGF.initButtons(Color.GRAY);
-		ownGF.enableButtons(false);
 
 		add(enemyGF);
 		add(ownGF);

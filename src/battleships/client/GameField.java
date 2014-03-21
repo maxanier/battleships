@@ -131,16 +131,16 @@ class GameField extends JPanel {
 	}
 
 	public void fieldPressed(GFButton btn) {
-		//If playing mode is active
+		// If playing mode is active
 		if (mode == 0) {
 			if (btn.getBackground() == Color.GRAY && btn.isEnabled()) {
 				listener.shoot(btn.getCoordX(), btn.getCoordY());
 				enableButtons(false);
 			}
-		} else { //If building mode is active
-			if(btn != null && btn.getBackground() != Color.RED) {
+		} else { // If building mode is active
+			if (btn != null && btn.getBackground() != Color.RED) {
 				GFButton[] btns = getSelectedFields(btn);
-				for(int i=0;i<btns.length;i++) {
+				for (int i = 0; i < btns.length; i++) {
 					btns[i].setBackground(Color.BLACK);
 				}
 			}
@@ -151,24 +151,16 @@ class GameField extends JPanel {
 		// TODO Field entered
 		// If building mode is active size of ship: 6-Math.abs(mode)
 		if (mode != 0) {
-			if (mode < 0) {
-				GFButton btns[] = getSelectedFields(btn);
-				boolean allValid = true;
+			GFButton btns[] = getSelectedFields(btn);
+			if (fieldsValid(btns)) {
 				for (int i = 0; i < btns.length; i++)
-					if (btns[i] == null
-							|| btns[i].getBackground() == Color.BLACK)
-						allValid = false;
-				if (allValid) {
-					for (int i = 0; i < btns.length; i++)
-						btns[i].setBackground(Color.LIGHT_GRAY);
-				} else {
-					for (int i = 0; i < btns.length; i++) {
-						if (btns[i] != null
-								&& btns[i].getBackground() != Color.BLACK)
-							btns[i].setBackground(Color.RED);
-					}
-				}
+					btns[i].setBackground(Color.LIGHT_GRAY);
 			} else {
+				for (int i = 0; i < btns.length; i++) {
+					if (btns[i] != null
+							&& btns[i].getBackground() != Color.BLACK)
+						btns[i].setBackground(Color.RED);
+				}
 			}
 		}
 		// If playing mode is active
@@ -181,14 +173,12 @@ class GameField extends JPanel {
 		// TODO Field exited
 		// If building mode is active size of ship: 6-Math.abs(mode)
 		if (mode != 0) {
-			if (mode < 0) {
-				GFButton[] btns = getSelectedFields(btn);
-				for (int i = 0; i < btns.length; i++) {
-					if (btns[i] != null
-							&& (btns[i].getBackground() == Color.LIGHT_GRAY || btns[i]
-									.getBackground() == Color.RED)) {
-						btns[i].setBackground(Color.BLUE);
-					}
+			GFButton[] btns = getSelectedFields(btn);
+			for (int i = 0; i < btns.length; i++) {
+				if (btns[i] != null
+						&& (btns[i].getBackground() == Color.LIGHT_GRAY || btns[i]
+								.getBackground() == Color.RED)) {
+					btns[i].setBackground(Color.BLUE);
 				}
 			}
 		}
@@ -236,11 +226,13 @@ class GameField extends JPanel {
 
 	public boolean fieldsValid(GFButton[] btns) {
 		for (int i = 0; i < btns.length; i++) {
+			if (btns[i] == null)
+				return false;
 			GFButton[] tmp = getFieldsAround(btns[i]);
-			if (tmp[0] == null || tmp[0].getBackground() == Color.BLACK
-					|| tmp[1] == null || tmp[1].getBackground() == Color.BLACK
-					|| tmp[2] == null || tmp[2].getBackground() == Color.BLACK
-					|| tmp[3] == null || tmp[3].getBackground() == Color.BLACK) {
+			if (tmp[0] != null && tmp[0].getBackground() == Color.BLACK
+					|| tmp[1] != null && tmp[1].getBackground() == Color.BLACK
+					|| tmp[2] != null && tmp[2].getBackground() == Color.BLACK
+					|| tmp[3] != null && tmp[3].getBackground() == Color.BLACK) {
 				return false;
 			}
 		}

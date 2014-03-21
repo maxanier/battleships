@@ -65,5 +65,9 @@ public class GameFieldBuilderGUI extends JPanel{
 		d.setVisible(true);
 		d.add(this);
 	}
+	
+	public GameField getField() {
+		return field;
+	}
 }
 
