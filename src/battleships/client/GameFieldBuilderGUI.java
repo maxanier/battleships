@@ -11,7 +11,7 @@ import javax.swing.JPanel;
 
 import battleships.util.CONSTANTS;
 
-public class GameFieldBuilderGUI extends JPanel{
+public class GameFieldBuilderGUI extends JPanel implements ShipPlacementListener {
 	private GameField field;
 	private JButton b_done;
 	private JButton[] b_ships;
@@ -24,18 +24,14 @@ public class GameFieldBuilderGUI extends JPanel{
 		d.setSize(400,400);
 		d.setResizable(true);
 
-		field = new GameField(size, 1);
+		field = new GameField(size, 1, this);
 		d.add(field);
 		field.initButtons(Color.BLUE);
 		
 		shipAmounts=CONSTANTS.getShipAmount();
 		
 		b_ships = new JButton[5];
-		b_ships[0] = new JButton("Aircraft Carrier: " + shipAmounts[0]);
-		b_ships[1] = new JButton("Battleship: " + shipAmounts[1]);
-		b_ships[2] = new JButton("Cruiser: " + shipAmounts[2]);
-		b_ships[3] = new JButton("Destroyer: " + shipAmounts[3]);
-		b_ships[4] = new JButton("Submarine: " + shipAmounts[4]);
+		updateButtons();
 		
 		for(int i=0; i<5;i++)
 			b_ships[i].addActionListener(new ActionListener() {
@@ -68,6 +64,23 @@ public class GameFieldBuilderGUI extends JPanel{
 	
 	public GameField getField() {
 		return field;
+	}
+	
+	public void updateButtons() {
+		b_ships[0] = new JButton("Aircraft Carrier: " + shipAmounts[0]);
+		b_ships[1] = new JButton("Battleship: " + shipAmounts[1]);
+		b_ships[2] = new JButton("Cruiser: " + shipAmounts[2]);
+		b_ships[3] = new JButton("Destroyer: " + shipAmounts[3]);
+		b_ships[4] = new JButton("Submarine: " + shipAmounts[4]);
+	}
+
+	@Override
+	public boolean shipPlaced(int mode) {
+		if(shipAmounts[mode] > 0) {
+			shipAmounts[mode]--;
+			return true;
+		} else
+			return false;
 	}
 }
 

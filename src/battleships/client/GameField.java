@@ -48,11 +48,19 @@ class GameField extends JPanel {
 	private GFButton[][] b_fields;
 	int mode;
 	IGUIListener listener;
+	ShipPlacementListener placementListener;
 
 	public GameField(int size, int pMode) {
 		super(new GridBagLayout());
 		b_fields = new GFButton[size][size];
 		mode = pMode;
+	}
+	
+	public GameField(int size, int pMode, ShipPlacementListener pListener) {
+		super(new GridBagLayout());
+		b_fields = new GFButton[size][size];
+		mode = pMode;
+		placementListener = pListener;
 	}
 
 	// Initializes all buttons and sets their color to clr
@@ -144,7 +152,7 @@ class GameField extends JPanel {
 					btns[i].setBackground(Color.BLACK);
 				}
 			}
-			//TODO Count ships
+			placementListener.shipPlaced(Math.abs(mode));
 		}
 	}
 

@@ -28,7 +28,7 @@ public class ClientGUI extends JPanel {
 	private GameField ownGF, enemyGF;
 	private int amountLarge, amountSmall;
 	private JFrame frame;
-
+	
 	public ClientGUI(int pSize, JFrame pFrame) {
 		amountLarge = size / 10;
 		amountSmall = size / 5;
