@@ -64,7 +64,6 @@ public class ClientGameEngine implements IClientEngine, IGUIListener {
 	@Override
 	public void notifyEnd(Player winner) {
 		JOptionPane.showMessageDialog(null, "Player "+winner.getNickname()+" won");
-		frame.dispose();
 		
 
 	}
