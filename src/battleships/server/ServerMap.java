@@ -90,18 +90,14 @@ public class ServerMap {
 	 * @return Valid map
 	 */
 	public boolean isValid() {
-		return true;//TODO remove
-		
-		/*
-		 * if(shipFieldCount()!=CONSTANTS.getShipFieldCount()){
+		if(shipFieldCount()!=CONSTANTS.getShipFieldCount()){
 		 
 			Logger.w(TAG, "Map is invalid: ShipField count is wrong");
 			return false;
 		}
-	
+		//TODO Check rest
 		return true;
-		*/
-		//TODO check if valid
+
 	}
 	
 	/**

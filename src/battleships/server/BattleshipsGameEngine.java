@@ -51,7 +51,7 @@ public class BattleshipsGameEngine implements IGameEngine {
 
 	@Override
 	public void playerLeft(Player player) {
-		// TODO Auto-generated method stub
+		//TODO
 
 	}
 
@@ -84,8 +84,8 @@ public class BattleshipsGameEngine implements IGameEngine {
 		}
 
 		if (!map.shipsLeft()) {
-			gameListener.notifyEnd(attacker);
-			end();
+			
+			end(attacker);
 		} else {
 			nextPlayer();
 		}
@@ -125,8 +125,8 @@ public class BattleshipsGameEngine implements IGameEngine {
 		return true;
 	}
 
-	private void end() {
-		// TODO Auto-generated method stub
+	private void end(Player winner) {
+		gameListener.notifyEnd(winner);
 
 	}
 
