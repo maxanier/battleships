@@ -71,4 +71,10 @@ public class ClientGUI extends JPanel {
 		if(sunk)
 			JOptionPane.showMessageDialog(this, "Ship sunken");
 	}
+	
+	public String getMap() {
+		if(ownGF == null)
+			return null;
+		return ownGF.toString();
+	}
 }
