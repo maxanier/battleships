@@ -144,11 +144,11 @@ class GameField extends JPanel {
 					btns[i].setBackground(Color.BLACK);
 				}
 			}
+			//TODO Count ships
 		}
 	}
 
 	public void fieldEntered(GFButton btn) {
-		// TODO Field entered
 		// If building mode is active size of ship: 6-Math.abs(mode)
 		if (mode != 0) {
 			GFButton btns[] = getSelectedFields(btn);
@@ -170,7 +170,6 @@ class GameField extends JPanel {
 	}
 
 	public void fieldExited(GFButton btn) {
-		// TODO Field exited
 		// If building mode is active size of ship: 6-Math.abs(mode)
 		if (mode != 0) {
 			GFButton[] btns = getSelectedFields(btn);

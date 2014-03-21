@@ -118,12 +118,11 @@ public class ClientGameEngine implements IClientEngine, IGUIListener {
 	}
 
 	private void createGUI(int size) {
-		gui = new ClientGUI(size);
 		JFrame f = new JFrame("Battleships Client");
+		gui = new ClientGUI(size, f);
 		f.add(gui);
 		f.setResizable(true);
-		f.setSize(500, 600);
-		f.setVisible(true);
+		f.setSize(700, 700);
 		
 	}
 
