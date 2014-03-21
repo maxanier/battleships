@@ -20,7 +20,7 @@ public class GameFieldBuilderGUI extends JPanel{
 	
 
 	public GameFieldBuilderGUI(int size) {
-		JDialog d = new JDialog();
+		final JDialog d = new JDialog();
 		d.setSize(400,400);
 		d.setResizable(true);
 
@@ -53,7 +53,7 @@ public class GameFieldBuilderGUI extends JPanel{
 		b_done = new JButton("Done");
 		b_done.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				//TODO Done button
+				d.dispose();
 				done = true;
 			}
 		});

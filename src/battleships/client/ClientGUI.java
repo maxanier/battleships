@@ -20,30 +20,28 @@ import Exceptions.OutOfBoundsException;
 public class ClientGUI extends JPanel {	
 
 	private static final String TAG = "ClientGUI";
+	private int size;
 	/*
 	 * Start of ClientGUI class, the main class of the GUI
 	 */
 	private GameField ownGF, enemyGF;
 	private int amountLarge, amountSmall;
 
-	public ClientGUI(int size) {
+	public ClientGUI(int pSize) {
 		amountLarge = size / 10;
 		amountSmall = size / 5;
-		GameFieldBuilderGUI builderGUI = new GameFieldBuilderGUI(size);
-		while(!builderGUI.done) {
-			try {
-				Thread.sleep(100);
-			} catch (InterruptedException e) {}
-		}
-		ownGF = builderGUI.getField();
-		ownGF.enableButtons(false);
-		
-		
+		size = pSize;
+	}
+	
+	//Initializes the GUI, ownGF is needed first
+	public void init() {
 		enemyGF = new GameField(size, 0);
 		enemyGF.initButtons(Color.GRAY);
 		enemyGF.enableButtons(false);
 		
-
+		ownGF.setMode(0);
+		ownGF.enableButtons(false);
+		
 		add(enemyGF);
 		add(ownGF);
 	}
@@ -76,5 +74,16 @@ public class ClientGUI extends JPanel {
 		if(ownGF == null)
 			return null;
 		return ownGF.toString();
+	}
+	
+	public void createMap(IGUIListener listener) {
+		GameFieldBuilderGUI builderGUI = new GameFieldBuilderGUI(size);
+		while(!builderGUI.done) {
+			try {
+				Thread.sleep(100);
+			} catch (InterruptedException e) {}
+		}
+		ownGF = builderGUI.getField();
+		listener.mapCreated(ownGF.toString());
 	}
 }
