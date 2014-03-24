@@ -4,6 +4,8 @@ import java.util.ArrayList;
 
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
+import javax.swing.JPanel;
+import javax.swing.SwingUtilities;
 
 import battleships.client.com.GameListener;
 import battleships.util.CONSTANTS;
@@ -38,7 +40,9 @@ public class ClientGameEngine implements IClientEngine, IGUIListener {
 
 	@Override
 	public void mapSet(boolean success) {
-		// TODO Auto-generated method stub
+		if(!success){
+			gui.createMap(this);
+		}
 
 	}
 
@@ -138,7 +142,8 @@ public class ClientGameEngine implements IClientEngine, IGUIListener {
 	@Override
 	public void stop(String reason) {
 		JOptionPane.showMessageDialog(null, "Stopping: " + reason);
-		((JFrame)gui.getParent()).dispose();
+		JFrame topFrame = (JFrame) SwingUtilities.getWindowAncestor(gui);
+		topFrame.dispose();
 		
 		
 	}
