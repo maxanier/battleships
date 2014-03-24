@@ -34,6 +34,14 @@ public class ClientGUI extends JPanel {
 		amountSmall = size / 5;
 		size = pSize;
 		frame = pFrame;
+		
+		//TEMP
+		GameFieldBuilderGUI builderGUI = new GameFieldBuilderGUI(size);
+		while(!builderGUI.done) {
+			try {
+				Thread.sleep(100);
+			} catch (InterruptedException e) {}
+		}
 	}
 	
 	//Initializes the GUI, ownGF is needed first

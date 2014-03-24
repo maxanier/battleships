@@ -10,6 +10,7 @@ import java.awt.event.MouseListener;
 import java.util.ArrayList;
 
 import javax.swing.JButton;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 
 import battleships.util.FieldId;
@@ -146,13 +147,13 @@ class GameField extends JPanel {
 				enableButtons(false);
 			}
 		} else { // If building mode is active
-			if (btn != null && btn.getBackground() != Color.RED) {
+			if (btn != null && btn.getBackground() != Color.RED && placementListener.shipPlaced(Math.abs(mode))) {
 				GFButton[] btns = getSelectedFields(btn);
 				for (int i = 0; i < btns.length; i++) {
 					btns[i].setBackground(Color.BLACK);
 				}
-			}
-			placementListener.shipPlaced(Math.abs(mode));
+			} else
+				JOptionPane.showMessageDialog(this, "Unable to place ship", "Error", JOptionPane.ERROR_MESSAGE);
 		}
 	}
 
@@ -173,7 +174,7 @@ class GameField extends JPanel {
 		}
 		// If playing mode is active
 		else {
-
+			btn.setSelected(true);
 		}
 	}
 
