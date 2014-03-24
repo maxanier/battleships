@@ -11,6 +11,7 @@ import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 
 import battleships.util.CONSTANTS;
+import battleships.util.Logger;
 
 public class GameFieldBuilderGUI extends JPanel implements ShipPlacementListener {
 	private GameField field;
@@ -18,6 +19,8 @@ public class GameFieldBuilderGUI extends JPanel implements ShipPlacementListener
 	private JButton[] b_ships;
 	private int[] shipAmounts;
 	public boolean done;
+	
+	private final String TAG = "GameFieldBuilderGUI";
 	
 
 	public GameFieldBuilderGUI(int size) {
@@ -92,13 +95,14 @@ public class GameFieldBuilderGUI extends JPanel implements ShipPlacementListener
 	public boolean shipPlaced(int mode) {
 		if(shipAmounts[mode-1] > 0) {
 			shipAmounts[mode-1]--;
+			Logger.i(TAG, "Ship placed, mode " + mode + " now " + shipAmounts[mode-1] + " ships left");
 			updateButtons();
 			boolean allPlaced = true;
 			for(int tmp : shipAmounts)
 				if(tmp != 0)
 					allPlaced = false;
-			if(allPlaced) 
-				JOptionPane.showMessageDialog(this, "All ships placed, please press \"Done\"", "Done", JOptionPane.INFORMATION_MESSAGE);
+			//if(allPlaced) 
+				//JOptionPane.showMessageDialog(this, "All ships placed, please press \"Done\"", "Done", JOptionPane.INFORMATION_MESSAGE);
 			return true;
 		} else
 			return false;
