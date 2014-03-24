@@ -132,6 +132,15 @@ public class ClientGameEngine implements IClientEngine, IGUIListener {
 		gui.init();
 		gameListener.sendMap(map);
 		
+		
+	}
+
+	@Override
+	public void stop(String reason) {
+		JOptionPane.showMessageDialog(null, "Stopping: " + reason);
+		((JFrame)gui.getParent()).dispose();
+		
+		
 	}
 
 

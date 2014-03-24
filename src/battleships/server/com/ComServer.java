@@ -61,8 +61,11 @@ public class ComServer extends EnhancedServer implements GameListener {
 
 	@Override
 	public void processClosedEnhancedConnection(String ip, int port) {
-		engine.playerLeft(players.getPlayer(ip, port));
+		if(mode==PLAYING_MODE){
+			engine.playerLeft(players.getPlayer(ip, port));
+		}
 		players.removePlayer(ip, port);
+		stopServer();
 
 	}
 
@@ -211,5 +214,13 @@ public class ComServer extends EnhancedServer implements GameListener {
 		mode = MAP_CREATION_MODE;
 		this.sendToAll(PROTOKOLL.SC_CREATE_MAP);
 	}
+	
+	private void stopServer(){
+		this.sendToAll(PROTOKOLL.SC_SERVER_STOPPING);
+		this.close();
+		
+	}
+	
+	
 
 }

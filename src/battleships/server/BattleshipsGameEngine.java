@@ -51,7 +51,15 @@ public class BattleshipsGameEngine implements IGameEngine {
 
 	@Override
 	public void playerLeft(Player player) {
-		//TODO
+		if(players!=null){
+			players.toFirst();
+			while(players.hasAccess()&&players.getObject().equals(player)){
+				players.next();
+			}
+			if(players.hasAccess()){
+				this.end((Player)players.getObject());
+			}
+		}
 
 	}
 

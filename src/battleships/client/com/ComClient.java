@@ -122,6 +122,12 @@ public class ComClient extends EnhancedClient implements GameListener {
 			engine.notifyError("Unkown command");
 			Logger.w(TAG, "Unknown command");
 		}
+		else if (message.startsWith(PROTOKOLL.SC_SERVER_STOPPING)){
+
+			engine.stop("Server stopping");
+			this.close();
+			
+		}
 
 	}
 

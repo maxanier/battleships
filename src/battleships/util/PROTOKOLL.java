@@ -10,6 +10,7 @@ public class PROTOKOLL {
 	public final static String ERROR = "-ERR:";
 	public final static String MISSING_PARAMETER = ERROR + " Missing Parameter";
 	public final static String UNKNOWN="UNKNOWN COMMAND";
+	public final static String SC_SERVER_STOPPING="stopping";
 
 	// Lobby-stage
 	public final static String SC_HELLO = "Hi, Please register";

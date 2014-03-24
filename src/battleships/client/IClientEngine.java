@@ -68,4 +68,10 @@ public interface IClientEngine {
 	 */
 	public ArrayList<Player> getPlayers();
 	
+	/**
+	 * Called when the client should be closed
+	 * @param reason
+	 */
+	public void stop(String reason);
+	
 }
