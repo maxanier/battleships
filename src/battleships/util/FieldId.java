@@ -15,7 +15,7 @@ public class FieldId {
 		case WATER: return Color.BLUE;
 		case SHIP: return Color.BLACK;
 		case SUNKEN_SHIP: return Color.RED;
-		case WATER_HIT: return new Color(128,0,255);
+		case WATER_HIT: return new Color(0,0,110);
 		default: return Color.GRAY;
 		}
 	}
