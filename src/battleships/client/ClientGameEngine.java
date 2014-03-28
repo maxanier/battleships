@@ -41,7 +41,6 @@ public class ClientGameEngine implements IClientEngine, IGUIListener {
 	@Override
 	public void mapSet(boolean success) {
 		if(!success){
-			gui.init();
 			gui.createMap(this);
 		}
 
