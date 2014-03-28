@@ -45,6 +45,7 @@ public class ClientGUI extends JPanel {
 		ownGF.setMode(0);
 		ownGF.enableButtons(false);
 		
+		frame.removeAll();
 		add(enemyGF);
 		add(ownGF);
 		
