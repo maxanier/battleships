@@ -240,7 +240,8 @@ class GameField extends JPanel {
 			if (tmp[0] != null && tmp[0].getBackground() == Color.BLACK
 					|| tmp[1] != null && tmp[1].getBackground() == Color.BLACK
 					|| tmp[2] != null && tmp[2].getBackground() == Color.BLACK
-					|| tmp[3] != null && tmp[3].getBackground() == Color.BLACK) {
+					|| tmp[3] != null && tmp[3].getBackground() == Color.BLACK
+					|| btns[i] != null &&  btns[i].getBackground() == Color.BLACK) {
 				return false;
 			}
 		}
