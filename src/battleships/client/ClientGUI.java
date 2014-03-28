@@ -62,10 +62,7 @@ public class ClientGUI extends JPanel {
 	public void showShotResult(boolean mine, int x, int y, int newId, boolean sunk) {
 		if(mine) {
 			try {
-				if(newId == FieldId.WATER)
-					ownGF.setButtonColor(x,y, )
-				else
-					ownGF.setButtonColor(x, y, FieldId.getColor(newId));
+				ownGF.setButtonColor(x, y, FieldId.getColor(newId));
 			} catch (OutOfBoundsException e) {
 				Logger.e(TAG, "The coordinates for the shot are out of bounds. Bad aim!", e);
 			}
