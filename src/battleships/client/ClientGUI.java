@@ -5,8 +5,11 @@ import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.ItemEvent;
+import java.awt.event.ItemListener;
 
 import javax.swing.JButton;
+import javax.swing.JCheckBox;
 import javax.swing.JDialog;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
@@ -26,14 +29,20 @@ public class ClientGUI extends JPanel {
 	 * Start of ClientGUI class, the main class of the GUI
 	 */
 	private GameField ownGF, enemyGF;
-	private int amountLarge, amountSmall;
 	private JFrame frame;
+	private JCheckBox cb_hide;
 	
 	public ClientGUI(int pSize, JFrame pFrame) {
-		amountLarge = size / 10;
-		amountSmall = size / 5;
 		size = pSize;
 		frame = pFrame;
+		cb_hide = new JCheckBox("Hide own gamefield");
+		cb_hide.setSelected(true);
+		cb_hide.addItemListener(new ItemListener() {
+			@Override
+			public void itemStateChanged(ItemEvent evt) {
+				toggleOwnGF();
+			}
+		});
 	}
 	
 	//Initializes the GUI, ownGF is needed first
@@ -47,11 +56,20 @@ public class ClientGUI extends JPanel {
 		ownGF.enableButtons(false);
 		
 		add(enemyGF);
+		add(cb_hide);
 		add(ownGF);
+		ownGF.setVisible(false);
 		
 		frame.setVisible(true);
+		frame.pack();
 		this.repaint();
 		frame.repaint();
+	}
+	
+	private void toggleOwnGF() {
+		if(ownGF != null) 
+			ownGF.setVisible(!cb_hide.isSelected());
+		frame.pack();
 	}
 	
 	public void acceptMyTurn(IGUIListener listener) {
