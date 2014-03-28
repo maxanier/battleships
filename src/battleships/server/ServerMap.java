@@ -142,55 +142,60 @@ public class ServerMap {
 			try {
 				int up=map[x][y-1];
 				if(up==FieldId.SHIP){
+					Logger.i(TAG, "Shippart found at "+(x)+":"+(y-1));
 					return true;
 				}
 				if(up==FieldId.SUNKEN_SHIP&&shipNearby(x,y-1,3)){
+					
 					return true;
 				}
 			} catch (IndexOutOfBoundsException e) {
-				
+				Logger.i(TAG, "Index out of Bound at "+(x)+":"+(y-1));
 			}
 		}
 		if(ignore!=2){
 			try {
 				int up=map[x+1][y];
 				if(up==FieldId.SHIP){
+					Logger.i(TAG, "Shippart found at "+(x+1)+":"+(y));
 					return true;
 				}
 				if(up==FieldId.SUNKEN_SHIP&&shipNearby(x+1,y,4)){
 					return true;
 				}
 			} catch (IndexOutOfBoundsException e) {
-
+				Logger.i(TAG, "Index out of Bound at "+(x+1)+":"+(y));
 			}
 		}
 		if(ignore!=3){
 			try {
 				int up=map[x][y+1];
 				if(up==FieldId.SHIP){
+					Logger.i(TAG, "Shippart found at "+(x)+":"+(y+1));
 					return true;
 				}
 				if(up==FieldId.SUNKEN_SHIP&&shipNearby(x,y+1,1)){
 					return true;
 				}
 			} catch (IndexOutOfBoundsException e) {
-
+				Logger.i(TAG, "Index out of Bound at "+(x)+":"+(y+1));
 			}
 		}
 		if(ignore!=4){
 			try {
 				int up=map[x-1][y];
 				if(up==FieldId.SHIP){
+					Logger.i(TAG, "Shippart found at "+(x-1)+":"+(y));
 					return true;
 				}
 				if(up==FieldId.SUNKEN_SHIP&&shipNearby(x-1,y,2)){
 					return true;
 				}
 			} catch (IndexOutOfBoundsException e) {
-
+				Logger.i(TAG, "Index out of Bound at "+(x-1)+":"+(y));
 			}
 		}
-		return true;
+		return false;
 	}
 
 	/**
