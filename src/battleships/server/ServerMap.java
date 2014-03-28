@@ -127,35 +127,70 @@ public class ServerMap {
 	 * @return Ship nearby
 	 */
 	public boolean shipNearby(int x, int y) {
-		try {
-			if (map[x - 1][y] == FieldId.SHIP) {
-				return true;
+		return shipNearby(x,y,0);
+	}
+	
+	/**
+	 * Checks recursivly if there are working ship parts connected
+	 * @param x
+	 * @param y
+	 * @param ignore Ignore 1=up,2=right,3=below,4=left
+	 * @return
+	 */
+	private boolean shipNearby(int x,int y,int ignore){
+		if(ignore!=1){
+			try {
+				int up=map[x][y-1];
+				if(up==FieldId.SHIP){
+					return true;
+				}
+				if(up==FieldId.SUNKEN_SHIP&&shipNearby(x,y-1,3)){
+					return true;
+				}
+			} catch (IndexOutOfBoundsException e) {
+				
 			}
-		} catch (IndexOutOfBoundsException e) {
-
 		}
-		try {
-			if (map[x + 1][y] == FieldId.SHIP) {
-				return true;
+		if(ignore!=2){
+			try {
+				int up=map[x+1][y];
+				if(up==FieldId.SHIP){
+					return true;
+				}
+				if(up==FieldId.SUNKEN_SHIP&&shipNearby(x+1,y,4)){
+					return true;
+				}
+			} catch (IndexOutOfBoundsException e) {
+
 			}
-		} catch (IndexOutOfBoundsException e) {
-
 		}
-		try {
-			if (map[x][y - 1] == FieldId.SHIP) {
-				return true;
+		if(ignore!=3){
+			try {
+				int up=map[x][y+1];
+				if(up==FieldId.SHIP){
+					return true;
+				}
+				if(up==FieldId.SUNKEN_SHIP&&shipNearby(x,y+1,1)){
+					return true;
+				}
+			} catch (IndexOutOfBoundsException e) {
+
 			}
-		} catch (IndexOutOfBoundsException e) {
-
 		}
-		try {
-			if (map[x][y + 1] == FieldId.SHIP) {
-				return true;
+		if(ignore!=4){
+			try {
+				int up=map[x-1][y];
+				if(up==FieldId.SHIP){
+					return true;
+				}
+				if(up==FieldId.SUNKEN_SHIP&&shipNearby(x-1,y,2)){
+					return true;
+				}
+			} catch (IndexOutOfBoundsException e) {
+
 			}
-		} catch (IndexOutOfBoundsException e) {
-
 		}
-		return false;
+		return true;
 	}
 
 	/**
@@ -188,6 +223,9 @@ public class ServerMap {
 		if (map[x][y] == FieldId.SHIP) {
 			map[x][y] = FieldId.SUNKEN_SHIP;
 			return true;
+		}
+		if(map[x][y]==FieldId.WATER){
+			map[x][y]=FieldId.WATER_HIT;
 		}
 		return false;
 	}

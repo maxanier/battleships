@@ -82,11 +82,15 @@ public class BattleshipsGameEngine implements IGameEngine {
 		ServerMap map = victim.getMap();
 
 		try {
+			boolean sunk=false;
+			if(map.shoot(x, y)){
+				sunk=!map.shipNearby(x, y);
+				if(sunk){
+					Logger.i(TAG, "Ship sunken");
+				}
+			}
 
-			map.shoot(x, y);
-
-			gameListener.notifyShotResult(victim, x, y, map.getFieldId(x, y),
-					(map.getFieldId(x, y)==FieldId.SUNKEN_SHIP&&!map.shipNearby(x, y)));
+			gameListener.notifyShotResult(victim, x, y, map.getFieldId(x, y),sunk);
 		} catch (IndexOutOfBoundsException e) {
 			Logger.e(TAG, "Map index out of bound", e);
 		}
@@ -134,6 +138,7 @@ public class BattleshipsGameEngine implements IGameEngine {
 	}
 
 	private void end(Player winner) {
+		Logger.i(TAG, winner.getNickname()+" won,");
 		gameListener.notifyEnd(winner);
 
 	}
