@@ -138,6 +138,9 @@ class GameField extends JPanel {
 		int[] b = { y };
 		setButtonColors(a, b, clr);
 	}
+	public GFButton getButton(int x, int y) {
+		return b_fields[x][y];
+	}
 
 	public void fieldPressed(GFButton btn) {
 		// If playing mode is active

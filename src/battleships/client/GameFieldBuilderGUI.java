@@ -95,7 +95,6 @@ public class GameFieldBuilderGUI extends JPanel implements ShipPlacementListener
 	public boolean shipPlaced(int mode) {
 		if(shipAmounts[mode-1] > 0) {
 			shipAmounts[mode-1]--;
-			Logger.i(TAG, "Ship placed, mode " + mode + " now " + shipAmounts[mode-1] + " ships left");
 			updateButtons();
 			boolean allPlaced = true;
 			for(int tmp : shipAmounts)
