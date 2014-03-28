@@ -38,7 +38,7 @@ public class ClientGUI extends JPanel {
 	
 	//Initializes the GUI, ownGF is needed first
 	public void init() {
-		frame.getContentPane().removeAll();
+		this.removeAll();
 		enemyGF = new GameField(size, 0);
 		enemyGF.initButtons(Color.GRAY);
 		enemyGF.enableButtons(false);
@@ -50,6 +50,7 @@ public class ClientGUI extends JPanel {
 		add(ownGF);
 		
 		frame.setVisible(true);
+		this.repaint();
 		frame.repaint();
 	}
 	
