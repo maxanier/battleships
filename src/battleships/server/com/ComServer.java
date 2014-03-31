@@ -4,6 +4,7 @@ import battleships.abiklassen.enhanced.EnhancedServer;
 import battleships.server.IGameEngine;
 import battleships.server.ServerMap;
 import battleships.server.ServerMap.MapInvalidException;
+import battleships.util.CONSTANTS;
 import battleships.util.Logger;
 import battleships.util.PROTOKOLL;
 import battleships.util.Player;
@@ -212,7 +213,7 @@ public class ComServer extends EnhancedServer implements GameListener {
 	private void startMapCreationStage() {
 		Logger.i(TAG, "Started map creation phase");
 		mode = MAP_CREATION_MODE;
-		this.sendToAll(PROTOKOLL.SC_CREATE_MAP);
+		this.sendToAll(PROTOKOLL.SC_CREATE_MAP+" "+CONSTANTS.GAME_SIZE);
 	}
 	
 	private void stopServer(){

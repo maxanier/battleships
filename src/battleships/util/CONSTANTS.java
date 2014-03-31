@@ -6,7 +6,7 @@ public class CONSTANTS {
 	public static final String LOG_DIRECTORY = "";
 	public static final int PORT = 6000;
 	public static final String LOG_FILE_NAME = "log.txt";
-	public static final int GAME_SIZE=20;
+	public static  int GAME_SIZE=15;
 	
 	public static int[] getShipAmount(){
 		int [] shipAmounts = new int[5];

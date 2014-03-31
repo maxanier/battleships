@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import battleships.abiklassen.enhanced.EnhancedClient;
 import battleships.client.ClientGameEngine;
 import battleships.client.IClientEngine;
+import battleships.util.CONSTANTS;
 import battleships.util.Logger;
 import battleships.util.PROTOKOLL;
 import battleships.util.Player;
@@ -40,6 +41,7 @@ public class ComClient extends EnhancedClient implements GameListener {
 		} else if (message.startsWith(PROTOKOLL.SC_PLAYING)) {
 			engine.notifyError("Servergame is running");
 		} else if (message.startsWith(PROTOKOLL.SC_CREATE_MAP)) {
+			CONSTANTS.GAME_SIZE=Integer.parseInt(message.replace(PROTOKOLL.SC_CREATE_MAP, "").trim());
 			engine.notifyCreateMap();
 		} else if (message.startsWith(PROTOKOLL.SC_MAP_ACCEPTED)) {
 			engine.mapSet(true);
