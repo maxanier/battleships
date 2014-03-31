@@ -76,6 +76,7 @@ public class GameFieldBuilderGUI extends JPanel implements ShipPlacementListener
 		tmp.add(field);
 		d.setVisible(true);
 		d.add(tmp);
+		d.pack();
 		d.repaint();
 	}
 	
