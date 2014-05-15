@@ -26,7 +26,7 @@ public class ClientGameEngine implements IClientEngine, IGUIListener {
 	private Player myPlayer;
 	private Player enemy;// only needed as long as two player game
 	private boolean myturn;
-	private final String TAG = "CLientGameEngine";
+	private final String TAG = "ClientGameEngine";
 
 	public ClientGameEngine() {
 		createGUI(CONSTANTS.GAME_SIZE);
@@ -124,7 +124,7 @@ public class ClientGameEngine implements IClientEngine, IGUIListener {
 
 	private void createGUI(int size) {
 		JFrame f = new JFrame("Battleships Client");
-		gui = new ClientGUI(size, f);
+		gui = new ClientGUI(f);
 		f.add(gui);
 		f.setResizable(true);
 		f.setSize(700, 700);

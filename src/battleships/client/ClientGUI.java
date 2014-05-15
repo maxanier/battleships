@@ -16,6 +16,7 @@ import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 
+import battleships.util.CONSTANTS;
 import battleships.util.FieldId;
 import battleships.util.Logger;
 
@@ -24,7 +25,6 @@ import Exceptions.OutOfBoundsException;
 public class ClientGUI extends JPanel {	
 
 	private static final String TAG = "ClientGUI";
-	private int size;
 	/*
 	 * Start of ClientGUI class, the main class of the GUI
 	 */
@@ -32,8 +32,7 @@ public class ClientGUI extends JPanel {
 	private JFrame frame;
 	private JCheckBox cb_hide;
 	
-	public ClientGUI(int pSize, JFrame pFrame) {
-		size = pSize;
+	public ClientGUI(JFrame pFrame) {
 		frame = pFrame;
 		cb_hide = new JCheckBox("Hide own gamefield");
 		cb_hide.setSelected(true);
@@ -48,7 +47,7 @@ public class ClientGUI extends JPanel {
 	//Initializes the GUI, ownGF is needed first
 	public void init() {
 		this.removeAll();
-		enemyGF = new GameField(size, 0);
+		enemyGF = new GameField(CONSTANTS.GAME_SIZE, 0);
 		enemyGF.initButtons(Color.GRAY);
 		enemyGF.enableButtons(false);
 		
@@ -103,7 +102,7 @@ public class ClientGUI extends JPanel {
 	}
 	
 	public void createMap(IGUIListener listener) {
-		GameFieldBuilderGUI builderGUI = new GameFieldBuilderGUI(size);
+		GameFieldBuilderGUI builderGUI = new GameFieldBuilderGUI(CONSTANTS.GAME_SIZE);
 		while(!builderGUI.done) {
 			try {
 				Thread.sleep(100);
