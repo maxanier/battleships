@@ -12,9 +12,9 @@ public class CONSTANTS {
 		int [] shipAmounts = new int[5];
 		for(int i=0; i<3; i++)
 			shipAmounts[i] = GAME_SIZE/10;
-		for(int i=3;i<5;i++)
+		for(int i=3;i<4;i++)
 			shipAmounts[i] = GAME_SIZE/5;
-		
+		shipAmounts[4]=0;
 		return shipAmounts;
 	}
 	
